@@ -1,0 +1,191 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta charset="utf-8">
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="-1" />
+<!--
+   Note to customizers: the body of the webrev is IDed as SUNWwebrev
+   to allow easy overriding by users of webrev via the userContent.css
+   mechanism available in some browsers.
+
+   For example, to have all "removed" information be red instead of
+   brown, set a rule in your userContent.css file like:
+
+       body#SUNWwebrev span.removed { color: red ! important; }
+-->
+<style type="text/css" media="screen">
+body {
+    background-color: #eeeeee;
+}
+hr {
+    border: none 0;
+    border-top: 1px solid #aaa;
+    height: 1px;
+}
+div.summary {
+    font-size: .8em;
+    border-bottom: 1px solid #aaa;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+div.summary h2 {
+    margin-bottom: 0.3em;
+}
+div.summary table th {
+    text-align: right;
+    vertical-align: top;
+    white-space: nowrap;
+}
+span.lineschanged {
+    font-size: 0.7em;
+}
+span.oldmarker {
+    color: red;
+    font-size: large;
+    font-weight: bold;
+}
+span.newmarker {
+    color: green;
+    font-size: large;
+    font-weight: bold;
+}
+span.removed {
+    color: brown;
+}
+span.changed {
+    color: blue;
+}
+span.new {
+    color: blue;
+    font-weight: bold;
+}
+a.print { font-size: x-small; }
+
+</style>
+
+<style type="text/css" media="print">
+pre { font-size: 0.8em; font-family: courier, monospace; }
+span.removed { color: #444; font-style: italic }
+span.changed { font-weight: bold; }
+span.new { font-weight: bold; }
+span.newmarker { font-size: 1.2em; font-weight: bold; }
+span.oldmarker { font-size: 1.2em; font-weight: bold; }
+a.print {display: none}
+hr { border: none 0; border-top: 1px solid #aaa; height: 1px; }
+</style>
+
+<title>hotspot Sdiff src/os/linux/vm </title>
+</head><body id="SUNWwebrev">
+<center><a href='../../../../make/defs.make.sdiff.html' target='_top'>&lt prev</a> <a href='../../../../index.html' target='_top'>index</a> next &gt</center>
+<h2>src/os/linux/vm/os_linux.cpp</h2>
+<a class="print" href="javascript:print()">Print this page</a>
+<pre></pre>
+
+<table><tr valign="top">
+<td><pre>
+
+</pre><hr></hr><pre>
+ 223     #define SYS_gettid 143
+ 224   #else
+ 225     #error define gettid for the arch
+ 226   #endif
+ 227 #endif
+ 228 
+ 229 // Cpu architecture string
+ 230 #if   defined(ZERO)
+ 231 static char cpu_arch[] = ZERO_LIBARCH;
+ 232 #elif defined(IA64)
+ 233 static char cpu_arch[] = "ia64";
+ 234 #elif defined(IA32)
+ 235 static char cpu_arch[] = "i386";
+ 236 #elif defined(AMD64)
+ 237 static char cpu_arch[] = "amd64";
+ 238 #elif defined(ARM)
+ 239 static char cpu_arch[] = "arm";
+ 240 #elif defined(PPC32)
+ 241 static char cpu_arch[] = "ppc";
+ 242 #elif defined(PPC64)
+
+
+
+ 243 static char cpu_arch[] = "ppc64";
+
+ 244 #elif defined(SPARC)
+ 245   #ifdef _LP64
+ 246 static char cpu_arch[] = "sparcv9";
+ 247   #else
+ 248 static char cpu_arch[] = "sparc";
+ 249   #endif
+ 250 #else
+ 251   #error Add appropriate cpu_arch setting
+ 252 #endif
+ 253 
+ 254 
+ 255 // pid_t gettid()
+ 256 //
+ 257 // Returns the kernel thread id of the currently running thread. Kernel
+ 258 // thread id is used to access /proc.
+ 259 //
+ 260 // (Note that getpid() on LinuxThreads returns kernel thread id too; but
+ 261 // on NPTL, it returns the same pid for all threads, as required by POSIX.)
+ 262 //
+ 263 pid_t os::Linux::gettid() {
+
+</pre><hr></hr>
+</pre></td><td><pre>
+
+</pre><hr></hr><pre>
+ 223     #define SYS_gettid 143
+ 224   #else
+ 225     #error define gettid for the arch
+ 226   #endif
+ 227 #endif
+ 228 
+ 229 // Cpu architecture string
+ 230 #if   defined(ZERO)
+ 231 static char cpu_arch[] = ZERO_LIBARCH;
+ 232 #elif defined(IA64)
+ 233 static char cpu_arch[] = "ia64";
+ 234 #elif defined(IA32)
+ 235 static char cpu_arch[] = "i386";
+ 236 #elif defined(AMD64)
+ 237 static char cpu_arch[] = "amd64";
+ 238 #elif defined(ARM)
+ 239 static char cpu_arch[] = "arm";
+ 240 #elif defined(PPC32)
+ 241 static char cpu_arch[] = "ppc";
+ 242 #elif defined(PPC64)
+<span class="new"> 243 #if defined(VM_LITTLE_ENDIAN)</span>
+<span class="new"> 244 static char cpu_arch[] = "ppc64le";</span>
+<span class="new"> 245 #else</span>
+ 246 static char cpu_arch[] = "ppc64";
+<span class="new"> 247 #endif</span>
+ 248 #elif defined(SPARC)
+ 249   #ifdef _LP64
+ 250 static char cpu_arch[] = "sparcv9";
+ 251   #else
+ 252 static char cpu_arch[] = "sparc";
+ 253   #endif
+ 254 #else
+ 255   #error Add appropriate cpu_arch setting
+ 256 #endif
+ 257 
+ 258 
+ 259 // pid_t gettid()
+ 260 //
+ 261 // Returns the kernel thread id of the currently running thread. Kernel
+ 262 // thread id is used to access /proc.
+ 263 //
+ 264 // (Note that getpid() on LinuxThreads returns kernel thread id too; but
+ 265 // on NPTL, it returns the same pid for all threads, as required by POSIX.)
+ 266 //
+ 267 pid_t os::Linux::gettid() {
+
+</pre><hr></hr>
+</pre></td>
+</tr></table>
+<center><a href='../../../../make/defs.make.sdiff.html' target='_top'>&lt prev</a> <a href='../../../../index.html' target='_top'>index</a> next &gt</center>
+</body></html>

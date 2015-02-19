@@ -1,0 +1,363 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta charset="utf-8">
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="-1" />
+<!--
+   Note to customizers: the body of the webrev is IDed as SUNWwebrev
+   to allow easy overriding by users of webrev via the userContent.css
+   mechanism available in some browsers.
+
+   For example, to have all "removed" information be red instead of
+   brown, set a rule in your userContent.css file like:
+
+       body#SUNWwebrev span.removed { color: red ! important; }
+-->
+<style type="text/css" media="screen">
+body {
+    background-color: #eeeeee;
+}
+hr {
+    border: none 0;
+    border-top: 1px solid #aaa;
+    height: 1px;
+}
+div.summary {
+    font-size: .8em;
+    border-bottom: 1px solid #aaa;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+div.summary h2 {
+    margin-bottom: 0.3em;
+}
+div.summary table th {
+    text-align: right;
+    vertical-align: top;
+    white-space: nowrap;
+}
+span.lineschanged {
+    font-size: 0.7em;
+}
+span.oldmarker {
+    color: red;
+    font-size: large;
+    font-weight: bold;
+}
+span.newmarker {
+    color: green;
+    font-size: large;
+    font-weight: bold;
+}
+span.removed {
+    color: brown;
+}
+span.changed {
+    color: blue;
+}
+span.new {
+    color: blue;
+    font-weight: bold;
+}
+a.print { font-size: x-small; }
+
+</style>
+
+<style type="text/css" media="print">
+pre { font-size: 0.8em; font-family: courier, monospace; }
+span.removed { color: #444; font-style: italic }
+span.changed { font-weight: bold; }
+span.new { font-weight: bold; }
+span.newmarker { font-size: 1.2em; font-weight: bold; }
+span.oldmarker { font-size: 1.2em; font-weight: bold; }
+a.print {display: none}
+hr { border: none 0; border-top: 1px solid #aaa; height: 1px; }
+</style>
+
+<title>jdk9-dev Sdiff common/autoconf </title>
+</head><body id="SUNWwebrev">
+<center>&lt prev <a href='../../index.html' target='_top'>index</a> <a href='../../common/autoconf/platform.m4.sdiff.html' target='_top'>next &gt</a></center>
+<h2>common/autoconf/generated-configure.sh</h2>
+<a class="print" href="javascript:print()">Print this page</a>
+<pre></pre>
+
+<table><tr valign="top">
+<td><pre>
+
+</pre><hr></hr><pre>
+4318 # Check if the VS env variables were setup prior to running configure.
+4319 # If not, then find vcvarsall.bat and run it automatically, and integrate
+4320 # the set env variables into the spec file.
+4321 
+4322 
+4323 
+4324 
+4325 
+4326 
+4327 
+4328 
+4329 
+4330 
+4331 
+4332 # This line needs to be here, verbatim, after all includes and the dummy hook
+4333 # definitions. It is replaced with custom functionality when building
+4334 # custom sources.
+4335 #CUSTOM_AUTOCONF_INCLUDE
+4336 
+4337 # Do not change or remove the following line, it is needed for consistency checks:
+<span class="changed">4338 DATE_WHEN_GENERATED=1423567509</span>
+4339 
+4340 ###############################################################################
+4341 #
+4342 # Initialization / Boot-strapping
+4343 #
+4344 # The bootstrapping process needs to solve the "chicken or the egg" problem,
+4345 # thus it jumps back and forth, each time gaining something needed later on.
+4346 #
+4347 ###############################################################################
+4348 
+4349 # If we are requested to print additional help, do that and then exit.
+4350 # This must be the very first call.
+4351 
+4352   if test "x$CONFIGURE_PRINT_TOOLCHAIN_LIST" != x; then
+4353     $PRINTF "The following toolchains are available as arguments to --with-toolchain-type.\n"
+4354     $PRINTF "Which are valid to use depends on the build platform.\n"
+4355     for toolchain in $VALID_TOOLCHAINS_all; do
+4356       # Use indirect variable referencing
+4357       toolchain_var_name=TOOLCHAIN_DESCRIPTION_$toolchain
+4358       TOOLCHAIN_DESCRIPTION=${!toolchain_var_name}
+
+</pre><hr></hr><pre>
+13875 
+13876 
+13877   # Also store the legacy naming of the cpu.
+13878   # Ie i586 and amd64 instead of x86 and x86_64
+13879   OPENJDK_TARGET_CPU_LEGACY="$OPENJDK_TARGET_CPU"
+13880   if test "x$OPENJDK_TARGET_CPU" = xx86; then
+13881     OPENJDK_TARGET_CPU_LEGACY="i586"
+13882   elif test "x$OPENJDK_TARGET_OS" != xmacosx &amp;&amp; test "x$OPENJDK_TARGET_CPU" = xx86_64; then
+13883     # On all platforms except MacOSX replace x86_64 with amd64.
+13884     OPENJDK_TARGET_CPU_LEGACY="amd64"
+13885   fi
+13886 
+13887 
+13888   # And the second legacy naming of the cpu.
+13889   # Ie i386 and amd64 instead of x86 and x86_64.
+13890   OPENJDK_TARGET_CPU_LEGACY_LIB="$OPENJDK_TARGET_CPU"
+13891   if test "x$OPENJDK_TARGET_CPU" = xx86; then
+13892     OPENJDK_TARGET_CPU_LEGACY_LIB="i386"
+13893   elif test "x$OPENJDK_TARGET_CPU" = xx86_64; then
+13894     OPENJDK_TARGET_CPU_LEGACY_LIB="amd64"
+
+
+13895   fi
+13896 
+13897 
+13898   # This is the name of the cpu (but using i386 and amd64 instead of
+13899   # x86 and x86_64, respectively), preceeded by a /, to be used when
+13900   # locating libraries. On macosx, it's empty, though.
+13901   OPENJDK_TARGET_CPU_LIBDIR="/$OPENJDK_TARGET_CPU_LEGACY_LIB"
+13902   if test "x$OPENJDK_TARGET_OS" = xmacosx; then
+13903     OPENJDK_TARGET_CPU_LIBDIR=""
+13904   fi
+13905 
+13906 
+13907   # OPENJDK_TARGET_CPU_ISADIR is normally empty. On 64-bit Solaris systems, it is set to
+13908   # /amd64 or /sparcv9. This string is appended to some library paths, like this:
+13909   # /usr/lib${OPENJDK_TARGET_CPU_ISADIR}/libexample.so
+13910   OPENJDK_TARGET_CPU_ISADIR=""
+13911   if test "x$OPENJDK_TARGET_OS" = xsolaris; then
+13912     if test "x$OPENJDK_TARGET_CPU" = xx86_64; then
+13913       OPENJDK_TARGET_CPU_ISADIR="/amd64"
+13914     elif test "x$OPENJDK_TARGET_CPU" = xsparcv9; then
+13915       OPENJDK_TARGET_CPU_ISADIR="/sparcv9"
+13916     fi
+13917   fi
+13918 
+13919 
+13920   # Setup OPENJDK_TARGET_CPU_OSARCH, which is used to set the os.arch Java system property
+13921   OPENJDK_TARGET_CPU_OSARCH="$OPENJDK_TARGET_CPU"
+13922   if test "x$OPENJDK_TARGET_OS" = xlinux &amp;&amp; test "x$OPENJDK_TARGET_CPU" = xx86; then
+13923     # On linux only, we replace x86 with i386.
+13924     OPENJDK_TARGET_CPU_OSARCH="i386"
+13925   elif test "x$OPENJDK_TARGET_OS" != xmacosx &amp;&amp; test "x$OPENJDK_TARGET_CPU" = xx86_64; then
+13926     # On all platforms except macosx, we replace x86_64 with amd64.
+13927     OPENJDK_TARGET_CPU_OSARCH="amd64"
+
+
+13928   fi
+13929 
+13930 
+13931   OPENJDK_TARGET_CPU_JLI="$OPENJDK_TARGET_CPU"
+13932   if test "x$OPENJDK_TARGET_CPU" = xx86; then
+13933     OPENJDK_TARGET_CPU_JLI="i386"
+13934   elif test "x$OPENJDK_TARGET_OS" != xmacosx &amp;&amp; test "x$OPENJDK_TARGET_CPU" = xx86_64; then
+13935     # On all platforms except macosx, we replace x86_64 with amd64.
+13936     OPENJDK_TARGET_CPU_JLI="amd64"
+
+
+13937   fi
+13938   # Now setup the -D flags for building libjli.
+13939   OPENJDK_TARGET_CPU_JLI_CFLAGS="-DLIBARCHNAME='\"$OPENJDK_TARGET_CPU_JLI\"'"
+13940   if test "x$OPENJDK_TARGET_OS" = xsolaris; then
+13941     if test "x$OPENJDK_TARGET_CPU_ARCH" = xsparc; then
+13942       OPENJDK_TARGET_CPU_JLI_CFLAGS="$OPENJDK_TARGET_CPU_JLI_CFLAGS -DLIBARCH32NAME='\"sparc\"' -DLIBARCH64NAME='\"sparcv9\"'"
+13943     elif test "x$OPENJDK_TARGET_CPU_ARCH" = xx86; then
+13944       OPENJDK_TARGET_CPU_JLI_CFLAGS="$OPENJDK_TARGET_CPU_JLI_CFLAGS -DLIBARCH32NAME='\"i386\"' -DLIBARCH64NAME='\"amd64\"'"
+13945     fi
+13946   fi
+13947 
+13948 
+13949   if test "x$OPENJDK_TARGET_OS" = xmacosx; then
+13950       OPENJDK_TARGET_OS_EXPORT_DIR=macosx
+13951   else
+13952       OPENJDK_TARGET_OS_EXPORT_DIR=${OPENJDK_TARGET_OS_TYPE}
+13953   fi
+13954 
+13955 
+13956   if test "x$OPENJDK_TARGET_CPU_BITS" = x64; then
+
+</pre><hr></hr>
+</pre></td><td><pre>
+
+</pre><hr></hr><pre>
+4318 # Check if the VS env variables were setup prior to running configure.
+4319 # If not, then find vcvarsall.bat and run it automatically, and integrate
+4320 # the set env variables into the spec file.
+4321 
+4322 
+4323 
+4324 
+4325 
+4326 
+4327 
+4328 
+4329 
+4330 
+4331 
+4332 # This line needs to be here, verbatim, after all includes and the dummy hook
+4333 # definitions. It is replaced with custom functionality when building
+4334 # custom sources.
+4335 #CUSTOM_AUTOCONF_INCLUDE
+4336 
+4337 # Do not change or remove the following line, it is needed for consistency checks:
+<span class="changed">4338 DATE_WHEN_GENERATED=1424209136</span>
+4339 
+4340 ###############################################################################
+4341 #
+4342 # Initialization / Boot-strapping
+4343 #
+4344 # The bootstrapping process needs to solve the "chicken or the egg" problem,
+4345 # thus it jumps back and forth, each time gaining something needed later on.
+4346 #
+4347 ###############################################################################
+4348 
+4349 # If we are requested to print additional help, do that and then exit.
+4350 # This must be the very first call.
+4351 
+4352   if test "x$CONFIGURE_PRINT_TOOLCHAIN_LIST" != x; then
+4353     $PRINTF "The following toolchains are available as arguments to --with-toolchain-type.\n"
+4354     $PRINTF "Which are valid to use depends on the build platform.\n"
+4355     for toolchain in $VALID_TOOLCHAINS_all; do
+4356       # Use indirect variable referencing
+4357       toolchain_var_name=TOOLCHAIN_DESCRIPTION_$toolchain
+4358       TOOLCHAIN_DESCRIPTION=${!toolchain_var_name}
+
+</pre><hr></hr><pre>
+13875 
+13876 
+13877   # Also store the legacy naming of the cpu.
+13878   # Ie i586 and amd64 instead of x86 and x86_64
+13879   OPENJDK_TARGET_CPU_LEGACY="$OPENJDK_TARGET_CPU"
+13880   if test "x$OPENJDK_TARGET_CPU" = xx86; then
+13881     OPENJDK_TARGET_CPU_LEGACY="i586"
+13882   elif test "x$OPENJDK_TARGET_OS" != xmacosx &amp;&amp; test "x$OPENJDK_TARGET_CPU" = xx86_64; then
+13883     # On all platforms except MacOSX replace x86_64 with amd64.
+13884     OPENJDK_TARGET_CPU_LEGACY="amd64"
+13885   fi
+13886 
+13887 
+13888   # And the second legacy naming of the cpu.
+13889   # Ie i386 and amd64 instead of x86 and x86_64.
+13890   OPENJDK_TARGET_CPU_LEGACY_LIB="$OPENJDK_TARGET_CPU"
+13891   if test "x$OPENJDK_TARGET_CPU" = xx86; then
+13892     OPENJDK_TARGET_CPU_LEGACY_LIB="i386"
+13893   elif test "x$OPENJDK_TARGET_CPU" = xx86_64; then
+13894     OPENJDK_TARGET_CPU_LEGACY_LIB="amd64"
+<span class="new">13895   elif test "x$OPENJDK_TARGET_CPU" = xppc64 &amp;&amp; test "x$OPENJDK_TARGET_CPU_ENDIAN" = xlittle; then</span>
+<span class="new">13896     OPENJDK_TARGET_CPU_LEGACY_LIB="ppc64le"</span>
+13897   fi
+13898 
+13899 
+13900   # This is the name of the cpu (but using i386 and amd64 instead of
+13901   # x86 and x86_64, respectively), preceeded by a /, to be used when
+13902   # locating libraries. On macosx, it's empty, though.
+13903   OPENJDK_TARGET_CPU_LIBDIR="/$OPENJDK_TARGET_CPU_LEGACY_LIB"
+13904   if test "x$OPENJDK_TARGET_OS" = xmacosx; then
+13905     OPENJDK_TARGET_CPU_LIBDIR=""
+13906   fi
+13907 
+13908 
+13909   # OPENJDK_TARGET_CPU_ISADIR is normally empty. On 64-bit Solaris systems, it is set to
+13910   # /amd64 or /sparcv9. This string is appended to some library paths, like this:
+13911   # /usr/lib${OPENJDK_TARGET_CPU_ISADIR}/libexample.so
+13912   OPENJDK_TARGET_CPU_ISADIR=""
+13913   if test "x$OPENJDK_TARGET_OS" = xsolaris; then
+13914     if test "x$OPENJDK_TARGET_CPU" = xx86_64; then
+13915       OPENJDK_TARGET_CPU_ISADIR="/amd64"
+13916     elif test "x$OPENJDK_TARGET_CPU" = xsparcv9; then
+13917       OPENJDK_TARGET_CPU_ISADIR="/sparcv9"
+13918     fi
+13919   fi
+13920 
+13921 
+13922   # Setup OPENJDK_TARGET_CPU_OSARCH, which is used to set the os.arch Java system property
+13923   OPENJDK_TARGET_CPU_OSARCH="$OPENJDK_TARGET_CPU"
+13924   if test "x$OPENJDK_TARGET_OS" = xlinux &amp;&amp; test "x$OPENJDK_TARGET_CPU" = xx86; then
+13925     # On linux only, we replace x86 with i386.
+13926     OPENJDK_TARGET_CPU_OSARCH="i386"
+13927   elif test "x$OPENJDK_TARGET_OS" != xmacosx &amp;&amp; test "x$OPENJDK_TARGET_CPU" = xx86_64; then
+13928     # On all platforms except macosx, we replace x86_64 with amd64.
+13929     OPENJDK_TARGET_CPU_OSARCH="amd64"
+<span class="new">13930   elif test "x$OPENJDK_TARGET_CPU" = xppc64 &amp;&amp; test "x$OPENJDK_TARGET_CPU_ENDIAN" = xlittle; then</span>
+<span class="new">13931     OPENJDK_TARGET_CPU_OSARCH="ppc64le"</span>
+13932   fi
+13933 
+13934 
+13935   OPENJDK_TARGET_CPU_JLI="$OPENJDK_TARGET_CPU"
+13936   if test "x$OPENJDK_TARGET_CPU" = xx86; then
+13937     OPENJDK_TARGET_CPU_JLI="i386"
+13938   elif test "x$OPENJDK_TARGET_OS" != xmacosx &amp;&amp; test "x$OPENJDK_TARGET_CPU" = xx86_64; then
+13939     # On all platforms except macosx, we replace x86_64 with amd64.
+13940     OPENJDK_TARGET_CPU_JLI="amd64"
+<span class="new">13941   elif test "x$OPENJDK_TARGET_CPU" = xppc64 &amp;&amp; test "x$OPENJDK_TARGET_CPU_ENDIAN" = xlittle; then</span>
+<span class="new">13942     OPENJDK_TARGET_CPU_JLI="ppc64le"</span>
+13943   fi
+13944   # Now setup the -D flags for building libjli.
+13945   OPENJDK_TARGET_CPU_JLI_CFLAGS="-DLIBARCHNAME='\"$OPENJDK_TARGET_CPU_JLI\"'"
+13946   if test "x$OPENJDK_TARGET_OS" = xsolaris; then
+13947     if test "x$OPENJDK_TARGET_CPU_ARCH" = xsparc; then
+13948       OPENJDK_TARGET_CPU_JLI_CFLAGS="$OPENJDK_TARGET_CPU_JLI_CFLAGS -DLIBARCH32NAME='\"sparc\"' -DLIBARCH64NAME='\"sparcv9\"'"
+13949     elif test "x$OPENJDK_TARGET_CPU_ARCH" = xx86; then
+13950       OPENJDK_TARGET_CPU_JLI_CFLAGS="$OPENJDK_TARGET_CPU_JLI_CFLAGS -DLIBARCH32NAME='\"i386\"' -DLIBARCH64NAME='\"amd64\"'"
+13951     fi
+13952   fi
+13953 
+13954 
+13955   if test "x$OPENJDK_TARGET_OS" = xmacosx; then
+13956       OPENJDK_TARGET_OS_EXPORT_DIR=macosx
+13957   else
+13958       OPENJDK_TARGET_OS_EXPORT_DIR=${OPENJDK_TARGET_OS_TYPE}
+13959   fi
+13960 
+13961 
+13962   if test "x$OPENJDK_TARGET_CPU_BITS" = x64; then
+
+</pre><hr></hr>
+</pre></td>
+</tr></table>
+<center>&lt prev <a href='../../index.html' target='_top'>index</a> <a href='../../common/autoconf/platform.m4.sdiff.html' target='_top'>next &gt</a></center>
+</body></html>

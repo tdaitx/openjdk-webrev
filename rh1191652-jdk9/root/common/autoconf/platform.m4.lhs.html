@@ -1,0 +1,716 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta charset="utf-8">
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="-1" />
+<!--
+   Note to customizers: the body of the webrev is IDed as SUNWwebrev
+   to allow easy overriding by users of webrev via the userContent.css
+   mechanism available in some browsers.
+
+   For example, to have all "removed" information be red instead of
+   brown, set a rule in your userContent.css file like:
+
+       body#SUNWwebrev span.removed { color: red ! important; }
+-->
+<style type="text/css" media="screen">
+body {
+    background-color: #eeeeee;
+}
+hr {
+    border: none 0;
+    border-top: 1px solid #aaa;
+    height: 1px;
+}
+div.summary {
+    font-size: .8em;
+    border-bottom: 1px solid #aaa;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+div.summary h2 {
+    margin-bottom: 0.3em;
+}
+div.summary table th {
+    text-align: right;
+    vertical-align: top;
+    white-space: nowrap;
+}
+span.lineschanged {
+    font-size: 0.7em;
+}
+span.oldmarker {
+    color: red;
+    font-size: large;
+    font-weight: bold;
+}
+span.newmarker {
+    color: green;
+    font-size: large;
+    font-weight: bold;
+}
+span.removed {
+    color: brown;
+}
+span.changed {
+    color: blue;
+}
+span.new {
+    color: blue;
+    font-weight: bold;
+}
+a.print { font-size: x-small; }
+
+</style>
+
+<style type="text/css" media="print">
+pre { font-size: 0.8em; font-family: courier, monospace; }
+span.removed { color: #444; font-style: italic }
+span.changed { font-weight: bold; }
+span.new { font-weight: bold; }
+span.newmarker { font-size: 1.2em; font-weight: bold; }
+span.oldmarker { font-size: 1.2em; font-weight: bold; }
+a.print {display: none}
+hr { border: none 0; border-top: 1px solid #aaa; height: 1px; }
+</style>
+
+    <script type="text/javascript" src="../../ancnav.js"></script>
+    </head>
+    <body id="SUNWwebrev" onkeypress="keypress(event);">
+    <a name="0"></a>
+    <pre></pre><hr></hr>
+<pre>
+   1 #
+   2 # Copyright (c) 2011, 2012, Oracle and/or its affiliates. All rights reserved.
+   3 # DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+   4 #
+   5 # This code is free software; you can redistribute it and/or modify it
+   6 # under the terms of the GNU General Public License version 2 only, as
+   7 # published by the Free Software Foundation.  Oracle designates this
+   8 # particular file as subject to the "Classpath" exception as provided
+   9 # by Oracle in the LICENSE file that accompanied this code.
+  10 #
+  11 # This code is distributed in the hope that it will be useful, but WITHOUT
+  12 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+  13 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+  14 # version 2 for more details (a copy is included in the LICENSE file that
+  15 # accompanied this code).
+  16 #
+  17 # You should have received a copy of the GNU General Public License version
+  18 # 2 along with this work; if not, write to the Free Software Foundation,
+  19 # Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+  20 #
+  21 # Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+  22 # or visit www.oracle.com if you need additional information or have any
+  23 # questions.
+  24 #
+  25 
+  26 # Support macro for PLATFORM_EXTRACT_TARGET_AND_BUILD.
+  27 # Converts autoconf style CPU name to OpenJDK style, into
+  28 # VAR_CPU, VAR_CPU_ARCH, VAR_CPU_BITS and VAR_CPU_ENDIAN.
+  29 AC_DEFUN([PLATFORM_EXTRACT_VARS_FROM_CPU],
+  30 [
+  31   # First argument is the cpu name from the trip/quad
+  32   case "$1" in
+  33     x86_64)
+  34       VAR_CPU=x86_64
+  35       VAR_CPU_ARCH=x86
+  36       VAR_CPU_BITS=64
+  37       VAR_CPU_ENDIAN=little
+  38       ;;
+  39     i?86)
+  40       VAR_CPU=x86
+  41       VAR_CPU_ARCH=x86
+  42       VAR_CPU_BITS=32
+  43       VAR_CPU_ENDIAN=little
+  44       ;;
+  45     arm*)
+  46       VAR_CPU=arm
+  47       VAR_CPU_ARCH=arm
+  48       VAR_CPU_BITS=32
+  49       VAR_CPU_ENDIAN=little
+  50       ;;
+  51     powerpc)
+  52       VAR_CPU=ppc
+  53       VAR_CPU_ARCH=ppc
+  54       VAR_CPU_BITS=32
+  55       VAR_CPU_ENDIAN=big
+  56       ;;
+  57     powerpc64)
+  58       VAR_CPU=ppc64
+  59       VAR_CPU_ARCH=ppc
+  60       VAR_CPU_BITS=64
+  61       VAR_CPU_ENDIAN=big
+  62       ;;
+  63     powerpc64le)
+  64       VAR_CPU=ppc64
+  65       VAR_CPU_ARCH=ppc
+  66       VAR_CPU_BITS=64
+  67       VAR_CPU_ENDIAN=little
+  68       ;;
+  69     s390)
+  70       VAR_CPU=s390
+  71       VAR_CPU_ARCH=s390
+  72       VAR_CPU_BITS=32
+  73       VAR_CPU_ENDIAN=big
+  74       ;;
+  75     s390x)
+  76       VAR_CPU=s390x
+  77       VAR_CPU_ARCH=s390
+  78       VAR_CPU_BITS=64
+  79       VAR_CPU_ENDIAN=big
+  80       ;;
+  81     sparc)
+  82       VAR_CPU=sparc
+  83       VAR_CPU_ARCH=sparc
+  84       VAR_CPU_BITS=32
+  85       VAR_CPU_ENDIAN=big
+  86       ;;
+  87     sparcv9|sparc64)
+  88       VAR_CPU=sparcv9
+  89       VAR_CPU_ARCH=sparc
+  90       VAR_CPU_BITS=64
+  91       VAR_CPU_ENDIAN=big
+  92       ;;
+  93     *)
+  94       AC_MSG_ERROR([unsupported cpu $1])
+  95       ;;
+  96   esac
+  97 ])
+  98 
+  99 # Support macro for PLATFORM_EXTRACT_TARGET_AND_BUILD.
+ 100 # Converts autoconf style OS name to OpenJDK style, into
+ 101 # VAR_OS, VAR_OS_TYPE and VAR_OS_ENV.
+ 102 AC_DEFUN([PLATFORM_EXTRACT_VARS_FROM_OS],
+ 103 [
+ 104   case "$1" in
+ 105     *linux*)
+ 106       VAR_OS=linux
+ 107       VAR_OS_TYPE=unix
+ 108       ;;
+ 109     *solaris*)
+ 110       VAR_OS=solaris
+ 111       VAR_OS_TYPE=unix
+ 112       ;;
+ 113     *darwin*)
+ 114       VAR_OS=macosx
+ 115       VAR_OS_TYPE=unix
+ 116       ;;
+ 117     *bsd*)
+ 118       VAR_OS=bsd
+ 119       VAR_OS_TYPE=unix
+ 120       ;;
+ 121     *cygwin*)
+ 122       VAR_OS=windows
+ 123       VAR_OS_ENV=windows.cygwin
+ 124       ;;
+ 125     *mingw*)
+ 126       VAR_OS=windows
+ 127       VAR_OS_ENV=windows.msys
+ 128       ;;
+ 129     *aix*)
+ 130       VAR_OS=aix
+ 131       VAR_OS_TYPE=unix
+ 132       ;;
+ 133     *)
+ 134       AC_MSG_ERROR([unsupported operating system $1])
+ 135       ;;
+ 136   esac
+ 137 ])
+ 138 
+ 139 # Expects $host_os $host_cpu $build_os and $build_cpu
+ 140 # and $with_target_bits to have been setup!
+ 141 #
+ 142 # Translate the standard triplet(quadruplet) definition
+ 143 # of the target/build system into OPENJDK_TARGET_OS, OPENJDK_TARGET_CPU,
+ 144 # OPENJDK_BUILD_OS, etc.
+ 145 AC_DEFUN([PLATFORM_EXTRACT_TARGET_AND_BUILD],
+ 146 [
+ 147   # Copy the autoconf trip/quadruplet verbatim to OPENJDK_TARGET_AUTOCONF_NAME
+ 148   # (from the autoconf "host") and OPENJDK_BUILD_AUTOCONF_NAME
+ 149   # Note that we might later on rewrite e.g. OPENJDK_TARGET_CPU due to reduced build,
+ 150   # but this will not change the value of OPENJDK_TARGET_AUTOCONF_NAME.
+ 151   OPENJDK_TARGET_AUTOCONF_NAME="$host"
+ 152   OPENJDK_BUILD_AUTOCONF_NAME="$build"
+ 153   AC_SUBST(OPENJDK_TARGET_AUTOCONF_NAME)
+ 154   AC_SUBST(OPENJDK_BUILD_AUTOCONF_NAME)
+ 155 
+ 156   # Convert the autoconf OS/CPU value to our own data, into the VAR_OS/CPU variables.
+ 157   PLATFORM_EXTRACT_VARS_FROM_OS($build_os)
+ 158   PLATFORM_EXTRACT_VARS_FROM_CPU($build_cpu)
+ 159   # ..and setup our own variables. (Do this explicitely to facilitate searching)
+ 160   OPENJDK_BUILD_OS="$VAR_OS"
+ 161   if test "x$VAR_OS_TYPE" != x; then
+ 162     OPENJDK_BUILD_OS_TYPE="$VAR_OS_TYPE"
+ 163   else
+ 164     OPENJDK_BUILD_OS_TYPE="$VAR_OS"
+ 165   fi
+ 166   if test "x$VAR_OS_ENV" != x; then
+ 167     OPENJDK_BUILD_OS_ENV="$VAR_OS_ENV"
+ 168   else
+ 169     OPENJDK_BUILD_OS_ENV="$VAR_OS"
+ 170   fi
+ 171   OPENJDK_BUILD_CPU="$VAR_CPU"
+ 172   OPENJDK_BUILD_CPU_ARCH="$VAR_CPU_ARCH"
+ 173   OPENJDK_BUILD_CPU_BITS="$VAR_CPU_BITS"
+ 174   OPENJDK_BUILD_CPU_ENDIAN="$VAR_CPU_ENDIAN"
+ 175   AC_SUBST(OPENJDK_BUILD_OS)
+ 176   AC_SUBST(OPENJDK_BUILD_OS_TYPE)
+ 177   AC_SUBST(OPENJDK_BUILD_OS_ENV)
+ 178   AC_SUBST(OPENJDK_BUILD_CPU)
+ 179   AC_SUBST(OPENJDK_BUILD_CPU_ARCH)
+ 180   AC_SUBST(OPENJDK_BUILD_CPU_BITS)
+ 181   AC_SUBST(OPENJDK_BUILD_CPU_ENDIAN)
+ 182 
+ 183   AC_MSG_CHECKING([openjdk-build os-cpu])
+ 184   AC_MSG_RESULT([$OPENJDK_BUILD_OS-$OPENJDK_BUILD_CPU])
+ 185 
+ 186   # Convert the autoconf OS/CPU value to our own data, into the VAR_OS/CPU variables.
+ 187   PLATFORM_EXTRACT_VARS_FROM_OS($host_os)
+ 188   PLATFORM_EXTRACT_VARS_FROM_CPU($host_cpu)
+ 189   # ... and setup our own variables. (Do this explicitely to facilitate searching)
+ 190   OPENJDK_TARGET_OS="$VAR_OS"
+ 191   if test "x$VAR_OS_TYPE" != x; then
+ 192     OPENJDK_TARGET_OS_TYPE="$VAR_OS_TYPE"
+ 193   else
+ 194     OPENJDK_TARGET_OS_TYPE="$VAR_OS"
+ 195   fi
+ 196   if test "x$VAR_OS_ENV" != x; then
+ 197     OPENJDK_TARGET_OS_ENV="$VAR_OS_ENV"
+ 198   else
+ 199     OPENJDK_TARGET_OS_ENV="$VAR_OS"
+ 200   fi
+ 201   OPENJDK_TARGET_CPU="$VAR_CPU"
+ 202   OPENJDK_TARGET_CPU_ARCH="$VAR_CPU_ARCH"
+ 203   OPENJDK_TARGET_CPU_BITS="$VAR_CPU_BITS"
+ 204   OPENJDK_TARGET_CPU_ENDIAN="$VAR_CPU_ENDIAN"
+ 205   AC_SUBST(OPENJDK_TARGET_OS)
+ 206   AC_SUBST(OPENJDK_TARGET_OS_TYPE)
+ 207   AC_SUBST(OPENJDK_TARGET_OS_ENV)
+ 208   AC_SUBST(OPENJDK_TARGET_CPU)
+ 209   AC_SUBST(OPENJDK_TARGET_CPU_ARCH)
+ 210   AC_SUBST(OPENJDK_TARGET_CPU_BITS)
+ 211   AC_SUBST(OPENJDK_TARGET_CPU_ENDIAN)
+ 212 
+ 213   AC_MSG_CHECKING([openjdk-target os-cpu])
+ 214   AC_MSG_RESULT([$OPENJDK_TARGET_OS-$OPENJDK_TARGET_CPU])
+ 215 ])
+ 216 
+ 217 # Check if a reduced build (32-bit on 64-bit platforms) is requested, and modify behaviour
+ 218 # accordingly. Must be done after setting up build and target system, but before
+ 219 # doing anything else with these values.
+ 220 AC_DEFUN([PLATFORM_SETUP_TARGET_CPU_BITS],
+ 221 [
+ 222   AC_ARG_WITH(target-bits, [AS_HELP_STRING([--with-target-bits],
+ 223        [build 32-bit or 64-bit binaries (for platforms that support it), e.g. --with-target-bits=32 @&lt;:@guessed@:&gt;@])])
+ 224 
+ 225   # We have three types of compiles:
+ 226   # native  == normal compilation, target system == build system
+ 227   # cross   == traditional cross compilation, target system != build system; special toolchain needed
+ 228   # reduced == using native compilers, but with special flags (e.g. -m32) to produce 32-bit builds on 64-bit machines
+ 229   #
+ 230   if test "x$OPENJDK_BUILD_AUTOCONF_NAME" != "x$OPENJDK_TARGET_AUTOCONF_NAME"; then
+ 231     # We're doing a proper cross-compilation
+ 232     COMPILE_TYPE="cross"
+ 233   else
+ 234     COMPILE_TYPE="native"
+ 235   fi
+ 236 
+ 237   if test "x$with_target_bits" != x; then
+ 238     if test "x$COMPILE_TYPE" = "xcross"; then
+ 239       AC_MSG_ERROR([It is not possible to combine --with-target-bits=X and proper cross-compilation. Choose either.])
+ 240     fi
+ 241 
+ 242     if test "x$with_target_bits" = x32 &amp;&amp; test "x$OPENJDK_TARGET_CPU_BITS" = x64; then
+ 243       # A reduced build is requested
+ 244       COMPILE_TYPE="reduced"
+ 245       OPENJDK_TARGET_CPU_BITS=32
+ 246       if test "x$OPENJDK_TARGET_CPU_ARCH" = "xx86"; then
+ 247         OPENJDK_TARGET_CPU=x86
+ 248       elif test "x$OPENJDK_TARGET_CPU_ARCH" = "xsparc"; then
+ 249         OPENJDK_TARGET_CPU=sparc
+ 250       else
+ 251         AC_MSG_ERROR([Reduced build (--with-target-bits=32) is only supported on x86_64 and sparcv9])
+ 252       fi
+ 253     elif test "x$with_target_bits" = x64 &amp;&amp; test "x$OPENJDK_TARGET_CPU_BITS" = x32; then
+ 254       AC_MSG_ERROR([It is not possible to use --with-target-bits=64 on a 32 bit system. Use proper cross-compilation instead.])
+ 255     elif test "x$with_target_bits" = "x$OPENJDK_TARGET_CPU_BITS"; then
+ 256       AC_MSG_NOTICE([--with-target-bits are set to build platform address size; argument has no meaning])
+ 257     else
+ 258       AC_MSG_ERROR([--with-target-bits can only be 32 or 64, you specified $with_target_bits!])
+ 259     fi
+ 260   fi
+ 261   AC_SUBST(COMPILE_TYPE)
+ 262 
+ 263   AC_MSG_CHECKING([compilation type])
+ 264   AC_MSG_RESULT([$COMPILE_TYPE])
+ 265 ])
+ 266 
+ 267 # Setup the legacy variables, for controlling the old makefiles.
+ 268 #
+ 269 AC_DEFUN([PLATFORM_SETUP_LEGACY_VARS],
+ 270 [
+ 271   # Also store the legacy naming of the cpu.
+ 272   # Ie i586 and amd64 instead of x86 and x86_64
+ 273   OPENJDK_TARGET_CPU_LEGACY="$OPENJDK_TARGET_CPU"
+ 274   if test "x$OPENJDK_TARGET_CPU" = xx86; then
+ 275     OPENJDK_TARGET_CPU_LEGACY="i586"
+ 276   elif test "x$OPENJDK_TARGET_OS" != xmacosx &amp;&amp; test "x$OPENJDK_TARGET_CPU" = xx86_64; then
+ 277     # On all platforms except MacOSX replace x86_64 with amd64.
+ 278     OPENJDK_TARGET_CPU_LEGACY="amd64"
+ 279   fi
+ 280   AC_SUBST(OPENJDK_TARGET_CPU_LEGACY)
+ 281 
+ 282   # And the second legacy naming of the cpu.
+ 283   # Ie i386 and amd64 instead of x86 and x86_64.
+ 284   OPENJDK_TARGET_CPU_LEGACY_LIB="$OPENJDK_TARGET_CPU"
+ 285   if test "x$OPENJDK_TARGET_CPU" = xx86; then
+ 286     OPENJDK_TARGET_CPU_LEGACY_LIB="i386"
+ 287   elif test "x$OPENJDK_TARGET_CPU" = xx86_64; then
+ 288     OPENJDK_TARGET_CPU_LEGACY_LIB="amd64"
+<a name="1" id="anc1"></a>
+
+ 289   fi
+ 290   AC_SUBST(OPENJDK_TARGET_CPU_LEGACY_LIB)
+ 291 
+ 292   # This is the name of the cpu (but using i386 and amd64 instead of
+ 293   # x86 and x86_64, respectively), preceeded by a /, to be used when
+ 294   # locating libraries. On macosx, it's empty, though.
+ 295   OPENJDK_TARGET_CPU_LIBDIR="/$OPENJDK_TARGET_CPU_LEGACY_LIB"
+ 296   if test "x$OPENJDK_TARGET_OS" = xmacosx; then
+ 297     OPENJDK_TARGET_CPU_LIBDIR=""
+ 298   fi
+ 299   AC_SUBST(OPENJDK_TARGET_CPU_LIBDIR)
+ 300 
+ 301   # OPENJDK_TARGET_CPU_ISADIR is normally empty. On 64-bit Solaris systems, it is set to
+ 302   # /amd64 or /sparcv9. This string is appended to some library paths, like this:
+ 303   # /usr/lib${OPENJDK_TARGET_CPU_ISADIR}/libexample.so
+ 304   OPENJDK_TARGET_CPU_ISADIR=""
+ 305   if test "x$OPENJDK_TARGET_OS" = xsolaris; then
+ 306     if test "x$OPENJDK_TARGET_CPU" = xx86_64; then
+ 307       OPENJDK_TARGET_CPU_ISADIR="/amd64"
+ 308     elif test "x$OPENJDK_TARGET_CPU" = xsparcv9; then
+ 309       OPENJDK_TARGET_CPU_ISADIR="/sparcv9"
+ 310     fi
+ 311   fi
+ 312   AC_SUBST(OPENJDK_TARGET_CPU_ISADIR)
+ 313 
+ 314   # Setup OPENJDK_TARGET_CPU_OSARCH, which is used to set the os.arch Java system property
+ 315   OPENJDK_TARGET_CPU_OSARCH="$OPENJDK_TARGET_CPU"
+ 316   if test "x$OPENJDK_TARGET_OS" = xlinux &amp;&amp; test "x$OPENJDK_TARGET_CPU" = xx86; then
+ 317     # On linux only, we replace x86 with i386.
+ 318     OPENJDK_TARGET_CPU_OSARCH="i386"
+ 319   elif test "x$OPENJDK_TARGET_OS" != xmacosx &amp;&amp; test "x$OPENJDK_TARGET_CPU" = xx86_64; then
+ 320     # On all platforms except macosx, we replace x86_64 with amd64.
+ 321     OPENJDK_TARGET_CPU_OSARCH="amd64"
+<a name="2" id="anc2"></a>
+
+ 322   fi
+ 323   AC_SUBST(OPENJDK_TARGET_CPU_OSARCH)
+ 324 
+ 325   OPENJDK_TARGET_CPU_JLI="$OPENJDK_TARGET_CPU"
+ 326   if test "x$OPENJDK_TARGET_CPU" = xx86; then
+ 327     OPENJDK_TARGET_CPU_JLI="i386"
+ 328   elif test "x$OPENJDK_TARGET_OS" != xmacosx &amp;&amp; test "x$OPENJDK_TARGET_CPU" = xx86_64; then
+ 329     # On all platforms except macosx, we replace x86_64 with amd64.
+ 330     OPENJDK_TARGET_CPU_JLI="amd64"
+<a name="3" id="anc3"></a>
+
+ 331   fi
+ 332   # Now setup the -D flags for building libjli.
+ 333   OPENJDK_TARGET_CPU_JLI_CFLAGS="-DLIBARCHNAME='\"$OPENJDK_TARGET_CPU_JLI\"'"
+ 334   if test "x$OPENJDK_TARGET_OS" = xsolaris; then
+ 335     if test "x$OPENJDK_TARGET_CPU_ARCH" = xsparc; then
+ 336       OPENJDK_TARGET_CPU_JLI_CFLAGS="$OPENJDK_TARGET_CPU_JLI_CFLAGS -DLIBARCH32NAME='\"sparc\"' -DLIBARCH64NAME='\"sparcv9\"'"
+ 337     elif test "x$OPENJDK_TARGET_CPU_ARCH" = xx86; then
+ 338       OPENJDK_TARGET_CPU_JLI_CFLAGS="$OPENJDK_TARGET_CPU_JLI_CFLAGS -DLIBARCH32NAME='\"i386\"' -DLIBARCH64NAME='\"amd64\"'"
+ 339     fi
+ 340   fi
+ 341   AC_SUBST(OPENJDK_TARGET_CPU_JLI_CFLAGS)
+ 342 
+ 343   if test "x$OPENJDK_TARGET_OS" = xmacosx; then
+ 344       OPENJDK_TARGET_OS_EXPORT_DIR=macosx
+ 345   else
+ 346       OPENJDK_TARGET_OS_EXPORT_DIR=${OPENJDK_TARGET_OS_TYPE}
+ 347   fi
+ 348   AC_SUBST(OPENJDK_TARGET_OS_EXPORT_DIR)
+ 349 
+ 350   if test "x$OPENJDK_TARGET_CPU_BITS" = x64; then
+ 351     A_LP64="LP64:="
+ 352     # -D_LP64=1 is only set on linux and mac. Setting on windows causes diff in
+ 353     # unpack200.exe
+ 354     if test "x$OPENJDK_TARGET_OS" = xlinux || test "x$OPENJDK_TARGET_OS" = xmacosx; then
+ 355       ADD_LP64="-D_LP64=1"
+ 356     fi
+ 357   fi
+ 358   AC_SUBST(LP64,$A_LP64)
+ 359 
+ 360   if test "x$COMPILE_TYPE" = "xcross"; then
+ 361     # FIXME: ... or should this include reduced builds..?
+ 362     DEFINE_CROSS_COMPILE_ARCH="CROSS_COMPILE_ARCH:=$OPENJDK_TARGET_CPU_LEGACY"
+ 363   else
+ 364     DEFINE_CROSS_COMPILE_ARCH=""
+ 365   fi
+ 366   AC_SUBST(DEFINE_CROSS_COMPILE_ARCH)
+ 367 
+ 368   # ZERO_ARCHDEF is used to enable architecture-specific code
+ 369   case "${OPENJDK_TARGET_CPU}" in
+ 370     ppc)     ZERO_ARCHDEF=PPC32 ;;
+ 371     ppc64)   ZERO_ARCHDEF=PPC64 ;;
+ 372     s390*)   ZERO_ARCHDEF=S390  ;;
+ 373     sparc*)  ZERO_ARCHDEF=SPARC ;;
+ 374     x86_64*) ZERO_ARCHDEF=AMD64 ;;
+ 375     x86)     ZERO_ARCHDEF=IA32  ;;
+ 376     *)      ZERO_ARCHDEF=$(echo "${OPENJDK_TARGET_CPU_LEGACY_LIB}" | tr a-z A-Z)
+ 377   esac
+ 378   AC_SUBST(ZERO_ARCHDEF)
+ 379 ])
+ 380 
+ 381 AC_DEFUN([PLATFORM_SET_RELEASE_FILE_OS_VALUES],
+ 382 [
+ 383   if test "x$OPENJDK_TARGET_OS" = "xsolaris"; then
+ 384     REQUIRED_OS_NAME=SunOS
+ 385     REQUIRED_OS_VERSION=5.10
+ 386   fi
+ 387   if test "x$OPENJDK_TARGET_OS" = "xlinux"; then
+ 388     REQUIRED_OS_NAME=Linux
+ 389     REQUIRED_OS_VERSION=2.6
+ 390   fi
+ 391   if test "x$OPENJDK_TARGET_OS" = "xwindows"; then
+ 392     REQUIRED_OS_NAME=Windows
+ 393     if test "x$OPENJDK_TARGET_CPU_BITS" = "x64"; then
+ 394       REQUIRED_OS_VERSION=5.2
+ 395     else
+ 396       REQUIRED_OS_VERSION=5.1
+ 397     fi
+ 398   fi
+ 399   if test "x$OPENJDK_TARGET_OS" = "xmacosx"; then
+ 400     REQUIRED_OS_NAME=Darwin
+ 401     REQUIRED_OS_VERSION=11.2
+ 402   fi
+ 403 
+ 404   AC_SUBST(REQUIRED_OS_NAME)
+ 405   AC_SUBST(REQUIRED_OS_VERSION)
+ 406 ])
+ 407 
+ 408 #%%% Build and target systems %%%
+ 409 AC_DEFUN_ONCE([PLATFORM_SETUP_OPENJDK_BUILD_AND_TARGET],
+ 410 [
+ 411   # Figure out the build and target systems. # Note that in autoconf terminology, "build" is obvious, but "target"
+ 412   # is confusing; it assumes you are cross-compiling a cross-compiler (!)  and "target" is thus the target of the
+ 413   # product you're building. The target of this build is called "host". Since this is confusing to most people, we
+ 414   # have not adopted that system, but use "target" as the platform we are building for. In some places though we need
+ 415   # to use the configure naming style.
+ 416   AC_CANONICAL_BUILD
+ 417   AC_CANONICAL_HOST
+ 418   AC_CANONICAL_TARGET
+ 419 
+ 420   PLATFORM_EXTRACT_TARGET_AND_BUILD
+ 421   PLATFORM_SETUP_TARGET_CPU_BITS
+ 422   PLATFORM_SET_RELEASE_FILE_OS_VALUES
+ 423   PLATFORM_SETUP_LEGACY_VARS
+ 424 ])
+ 425 
+ 426 AC_DEFUN_ONCE([PLATFORM_SETUP_OPENJDK_BUILD_OS_VERSION],
+ 427 [
+ 428   ###############################################################################
+ 429 
+ 430   # Note that this is the build platform OS version!
+ 431 
+ 432   OS_VERSION="`uname -r | ${SED} 's!\.! !g' | ${SED} 's!-! !g'`"
+ 433   OS_VERSION_MAJOR="`${ECHO} ${OS_VERSION} | ${CUT} -f 1 -d ' '`"
+ 434   OS_VERSION_MINOR="`${ECHO} ${OS_VERSION} | ${CUT} -f 2 -d ' '`"
+ 435   OS_VERSION_MICRO="`${ECHO} ${OS_VERSION} | ${CUT} -f 3 -d ' '`"
+ 436   AC_SUBST(OS_VERSION_MAJOR)
+ 437   AC_SUBST(OS_VERSION_MINOR)
+ 438   AC_SUBST(OS_VERSION_MICRO)
+ 439 ])
+ 440 
+ 441 # Support macro for PLATFORM_SETUP_OPENJDK_TARGET_BITS.
+ 442 # Add -mX to various FLAGS variables.
+ 443 AC_DEFUN([PLATFORM_SET_COMPILER_TARGET_BITS_FLAGS],
+ 444 [
+ 445   # When we add flags to the "official" CFLAGS etc, we need to
+ 446   # keep track of these additions in ADDED_CFLAGS etc. These
+ 447   # will later be checked to make sure only controlled additions
+ 448   # have been made to CFLAGS etc.
+ 449   ADDED_CFLAGS=" ${COMPILER_TARGET_BITS_FLAG}${OPENJDK_TARGET_CPU_BITS}"
+ 450   ADDED_CXXFLAGS=" ${COMPILER_TARGET_BITS_FLAG}${OPENJDK_TARGET_CPU_BITS}"
+ 451   ADDED_LDFLAGS=" ${COMPILER_TARGET_BITS_FLAG}${OPENJDK_TARGET_CPU_BITS}"
+ 452 
+ 453   CFLAGS="${CFLAGS}${ADDED_CFLAGS}"
+ 454   CXXFLAGS="${CXXFLAGS}${ADDED_CXXFLAGS}"
+ 455   LDFLAGS="${LDFLAGS}${ADDED_LDFLAGS}"
+ 456 
+ 457   CFLAGS_JDK="${CFLAGS_JDK}${ADDED_CFLAGS}"
+ 458   CXXFLAGS_JDK="${CXXFLAGS_JDK}${ADDED_CXXFLAGS}"
+ 459   LDFLAGS_JDK="${LDFLAGS_JDK}${ADDED_LDFLAGS}"
+ 460 ])
+ 461 
+ 462 AC_DEFUN_ONCE([PLATFORM_SETUP_OPENJDK_TARGET_BITS],
+ 463 [
+ 464   ###############################################################################
+ 465   #
+ 466   # Now we check if libjvm.so will use 32 or 64 bit pointers for the C/C++ code.
+ 467   # (The JVM can use 32 or 64 bit Java pointers but that decision
+ 468   # is made at runtime.)
+ 469   #
+ 470 
+ 471   if test "x$OPENJDK_TARGET_OS" = xsolaris || test "x$OPENJDK_TARGET_OS" = xaix; then
+ 472     # Always specify -m flag on Solaris
+ 473     # And -q on AIX because otherwise the compiler produces 32-bit objects by default
+ 474     PLATFORM_SET_COMPILER_TARGET_BITS_FLAGS
+ 475   elif test "x$COMPILE_TYPE" = xreduced; then
+ 476     if test "x$OPENJDK_TARGET_OS_TYPE" = xunix; then
+ 477       # Specify -m if running reduced on unix platforms
+ 478       PLATFORM_SET_COMPILER_TARGET_BITS_FLAGS
+ 479     fi
+ 480   fi
+ 481 
+ 482   # Make compilation sanity check
+ 483   AC_CHECK_HEADERS([stdio.h], , [
+ 484     AC_MSG_NOTICE([Failed to compile stdio.h. This likely implies missing compile dependencies.])
+ 485     if test "x$COMPILE_TYPE" = xreduced; then
+ 486       AC_MSG_NOTICE([You are doing a reduced build. Check that you have 32-bit libraries installed.])
+ 487     elif test "x$COMPILE_TYPE" = xcross; then
+ 488       AC_MSG_NOTICE([You are doing a cross-compilation. Check that you have all target platform libraries installed.])
+ 489     fi
+ 490     AC_MSG_ERROR([Cannot continue.])
+ 491   ])
+ 492 
+ 493   AC_CHECK_SIZEOF([int *], [1111])
+ 494 
+ 495   # AC_CHECK_SIZEOF defines 'ac_cv_sizeof_int_p' to hold the number of bytes used by an 'int*'
+ 496   if test "x$ac_cv_sizeof_int_p" = x; then
+ 497     # The test failed, lets stick to the assumed value.
+ 498     AC_MSG_WARN([The number of bits in the target could not be determined, using $OPENJDK_TARGET_CPU_BITS.])
+ 499   else
+ 500     TESTED_TARGET_CPU_BITS=`expr 8 \* $ac_cv_sizeof_int_p`
+ 501 
+ 502     if test "x$TESTED_TARGET_CPU_BITS" != "x$OPENJDK_TARGET_CPU_BITS"; then
+ 503       # This situation may happen on 64-bit platforms where the compiler by default only generates 32-bit objects
+ 504       # Let's try to implicitely set the compilers target architecture and retry the test
+ 505       AC_MSG_NOTICE([The tested number of bits in the target ($TESTED_TARGET_CPU_BITS) differs from the number of bits expected to be found in the target ($OPENJDK_TARGET_CPU_BITS).])
+ 506       AC_MSG_NOTICE([I'll retry after setting the platforms compiler target bits flag to ${COMPILER_TARGET_BITS_FLAG}${OPENJDK_TARGET_CPU_BITS}])
+ 507       PLATFORM_SET_COMPILER_TARGET_BITS_FLAGS
+ 508 
+ 509       # We have to unset 'ac_cv_sizeof_int_p' first, otherwise AC_CHECK_SIZEOF will use the previously cached value!
+ 510       unset ac_cv_sizeof_int_p
+ 511       # And we have to undef the definition of SIZEOF_INT_P in confdefs.h by the previous invocation of AC_CHECK_SIZEOF
+ 512       cat &gt;&gt;confdefs.h &lt;&lt;_ACEOF
+ 513 #undef SIZEOF_INT_P
+ 514 _ACEOF
+ 515 
+ 516       AC_CHECK_SIZEOF([int *], [1111])
+ 517 
+ 518       TESTED_TARGET_CPU_BITS=`expr 8 \* $ac_cv_sizeof_int_p`
+ 519 
+ 520       if test "x$TESTED_TARGET_CPU_BITS" != "x$OPENJDK_TARGET_CPU_BITS"; then
+ 521         AC_MSG_ERROR([The tested number of bits in the target ($TESTED_TARGET_CPU_BITS) differs from the number of bits expected to be found in the target ($OPENJDK_TARGET_CPU_BITS)])
+ 522       fi
+ 523     fi
+ 524   fi
+ 525 
+ 526   AC_MSG_CHECKING([for target address size])
+ 527   AC_MSG_RESULT([$OPENJDK_TARGET_CPU_BITS bits])
+ 528 ])
+ 529 
+ 530 AC_DEFUN_ONCE([PLATFORM_SETUP_OPENJDK_TARGET_ENDIANNESS],
+ 531 [
+ 532   ###############################################################################
+ 533   #
+ 534   # Is the target little of big endian?
+ 535   #
+ 536   AC_C_BIGENDIAN([ENDIAN="big"],[ENDIAN="little"],[ENDIAN="unknown"],[ENDIAN="universal_endianness"])
+ 537 
+ 538   if test "x$ENDIAN" = xuniversal_endianness; then
+ 539     AC_MSG_ERROR([Building with both big and little endianness is not supported])
+ 540   fi
+ 541   if test "x$ENDIAN" != "x$OPENJDK_TARGET_CPU_ENDIAN"; then
+ 542     AC_MSG_ERROR([The tested endian in the target ($ENDIAN) differs from the endian expected to be found in the target ($OPENJDK_TARGET_CPU_ENDIAN)])
+ 543   fi
+ 544 ])
+<a name="4" id="anc4"></a><b style="font-size: large; color: red">--- EOF ---</b>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre><form name="eof"><input name="value" value="4" type="hidden" /></form></body></html>

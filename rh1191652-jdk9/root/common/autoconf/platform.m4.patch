@@ -1,0 +1,29 @@
+--- old/common/autoconf/platform.m4	2015-02-18 12:25:27.944453987 -0200
++++ new/common/autoconf/platform.m4	2015-02-18 12:25:27.894453987 -0200
+@@ -286,6 +286,8 @@
+     OPENJDK_TARGET_CPU_LEGACY_LIB="i386"
+   elif test "x$OPENJDK_TARGET_CPU" = xx86_64; then
+     OPENJDK_TARGET_CPU_LEGACY_LIB="amd64"
++  elif test "x$OPENJDK_TARGET_CPU" = xppc64 && test "x$OPENJDK_TARGET_CPU_ENDIAN" = xlittle; then
++    OPENJDK_TARGET_CPU_LEGACY_LIB="ppc64le"
+   fi
+   AC_SUBST(OPENJDK_TARGET_CPU_LEGACY_LIB)
+ 
+@@ -319,6 +321,8 @@
+   elif test "x$OPENJDK_TARGET_OS" != xmacosx && test "x$OPENJDK_TARGET_CPU" = xx86_64; then
+     # On all platforms except macosx, we replace x86_64 with amd64.
+     OPENJDK_TARGET_CPU_OSARCH="amd64"
++  elif test "x$OPENJDK_TARGET_CPU" = xppc64 && test "x$OPENJDK_TARGET_CPU_ENDIAN" = xlittle; then
++    OPENJDK_TARGET_CPU_OSARCH="ppc64le"
+   fi
+   AC_SUBST(OPENJDK_TARGET_CPU_OSARCH)
+ 
+@@ -328,6 +332,8 @@
+   elif test "x$OPENJDK_TARGET_OS" != xmacosx && test "x$OPENJDK_TARGET_CPU" = xx86_64; then
+     # On all platforms except macosx, we replace x86_64 with amd64.
+     OPENJDK_TARGET_CPU_JLI="amd64"
++  elif test "x$OPENJDK_TARGET_CPU" = xppc64 && test "x$OPENJDK_TARGET_CPU_ENDIAN" = xlittle; then
++    OPENJDK_TARGET_CPU_JLI="ppc64le"
+   fi
+   # Now setup the -D flags for building libjli.
+   OPENJDK_TARGET_CPU_JLI_CFLAGS="-DLIBARCHNAME='\"$OPENJDK_TARGET_CPU_JLI\"'"

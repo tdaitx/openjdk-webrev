@@ -1,0 +1,277 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta charset="utf-8">
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="-1" />
+<!--
+   Note to customizers: the body of the webrev is IDed as SUNWwebrev
+   to allow easy overriding by users of webrev via the userContent.css
+   mechanism available in some browsers.
+
+   For example, to have all "removed" information be red instead of
+   brown, set a rule in your userContent.css file like:
+
+       body#SUNWwebrev span.removed { color: red ! important; }
+-->
+<style type="text/css" media="screen">
+body {
+    background-color: #eeeeee;
+}
+hr {
+    border: none 0;
+    border-top: 1px solid #aaa;
+    height: 1px;
+}
+div.summary {
+    font-size: .8em;
+    border-bottom: 1px solid #aaa;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+div.summary h2 {
+    margin-bottom: 0.3em;
+}
+div.summary table th {
+    text-align: right;
+    vertical-align: top;
+    white-space: nowrap;
+}
+span.lineschanged {
+    font-size: 0.7em;
+}
+span.oldmarker {
+    color: red;
+    font-size: large;
+    font-weight: bold;
+}
+span.newmarker {
+    color: green;
+    font-size: large;
+    font-weight: bold;
+}
+span.removed {
+    color: brown;
+}
+span.changed {
+    color: blue;
+}
+span.new {
+    color: blue;
+    font-weight: bold;
+}
+a.print { font-size: x-small; }
+
+</style>
+
+<style type="text/css" media="print">
+pre { font-size: 0.8em; font-family: courier, monospace; }
+span.removed { color: #444; font-style: italic }
+span.changed { font-weight: bold; }
+span.new { font-weight: bold; }
+span.newmarker { font-size: 1.2em; font-weight: bold; }
+span.oldmarker { font-size: 1.2em; font-weight: bold; }
+a.print {display: none}
+hr { border: none 0; border-top: 1px solid #aaa; height: 1px; }
+</style>
+
+<title>jdk9-dev Sdiff common/autoconf </title>
+</head><body id="SUNWwebrev">
+<center><a href='../../common/autoconf/generated-configure.sh.sdiff.html' target='_top'>&lt prev</a> <a href='../../index.html' target='_top'>index</a> next &gt</center>
+<h2>common/autoconf/platform.m4</h2>
+<a class="print" href="javascript:print()">Print this page</a>
+<pre></pre>
+
+<table><tr valign="top">
+<td><pre>
+
+</pre><hr></hr><pre>
+ 269 AC_DEFUN([PLATFORM_SETUP_LEGACY_VARS],
+ 270 [
+ 271   # Also store the legacy naming of the cpu.
+ 272   # Ie i586 and amd64 instead of x86 and x86_64
+ 273   OPENJDK_TARGET_CPU_LEGACY="$OPENJDK_TARGET_CPU"
+ 274   if test "x$OPENJDK_TARGET_CPU" = xx86; then
+ 275     OPENJDK_TARGET_CPU_LEGACY="i586"
+ 276   elif test "x$OPENJDK_TARGET_OS" != xmacosx &amp;&amp; test "x$OPENJDK_TARGET_CPU" = xx86_64; then
+ 277     # On all platforms except MacOSX replace x86_64 with amd64.
+ 278     OPENJDK_TARGET_CPU_LEGACY="amd64"
+ 279   fi
+ 280   AC_SUBST(OPENJDK_TARGET_CPU_LEGACY)
+ 281 
+ 282   # And the second legacy naming of the cpu.
+ 283   # Ie i386 and amd64 instead of x86 and x86_64.
+ 284   OPENJDK_TARGET_CPU_LEGACY_LIB="$OPENJDK_TARGET_CPU"
+ 285   if test "x$OPENJDK_TARGET_CPU" = xx86; then
+ 286     OPENJDK_TARGET_CPU_LEGACY_LIB="i386"
+ 287   elif test "x$OPENJDK_TARGET_CPU" = xx86_64; then
+ 288     OPENJDK_TARGET_CPU_LEGACY_LIB="amd64"
+
+
+ 289   fi
+ 290   AC_SUBST(OPENJDK_TARGET_CPU_LEGACY_LIB)
+ 291 
+ 292   # This is the name of the cpu (but using i386 and amd64 instead of
+ 293   # x86 and x86_64, respectively), preceeded by a /, to be used when
+ 294   # locating libraries. On macosx, it's empty, though.
+ 295   OPENJDK_TARGET_CPU_LIBDIR="/$OPENJDK_TARGET_CPU_LEGACY_LIB"
+ 296   if test "x$OPENJDK_TARGET_OS" = xmacosx; then
+ 297     OPENJDK_TARGET_CPU_LIBDIR=""
+ 298   fi
+ 299   AC_SUBST(OPENJDK_TARGET_CPU_LIBDIR)
+ 300 
+ 301   # OPENJDK_TARGET_CPU_ISADIR is normally empty. On 64-bit Solaris systems, it is set to
+ 302   # /amd64 or /sparcv9. This string is appended to some library paths, like this:
+ 303   # /usr/lib${OPENJDK_TARGET_CPU_ISADIR}/libexample.so
+ 304   OPENJDK_TARGET_CPU_ISADIR=""
+ 305   if test "x$OPENJDK_TARGET_OS" = xsolaris; then
+ 306     if test "x$OPENJDK_TARGET_CPU" = xx86_64; then
+ 307       OPENJDK_TARGET_CPU_ISADIR="/amd64"
+ 308     elif test "x$OPENJDK_TARGET_CPU" = xsparcv9; then
+ 309       OPENJDK_TARGET_CPU_ISADIR="/sparcv9"
+ 310     fi
+ 311   fi
+ 312   AC_SUBST(OPENJDK_TARGET_CPU_ISADIR)
+ 313 
+ 314   # Setup OPENJDK_TARGET_CPU_OSARCH, which is used to set the os.arch Java system property
+ 315   OPENJDK_TARGET_CPU_OSARCH="$OPENJDK_TARGET_CPU"
+ 316   if test "x$OPENJDK_TARGET_OS" = xlinux &amp;&amp; test "x$OPENJDK_TARGET_CPU" = xx86; then
+ 317     # On linux only, we replace x86 with i386.
+ 318     OPENJDK_TARGET_CPU_OSARCH="i386"
+ 319   elif test "x$OPENJDK_TARGET_OS" != xmacosx &amp;&amp; test "x$OPENJDK_TARGET_CPU" = xx86_64; then
+ 320     # On all platforms except macosx, we replace x86_64 with amd64.
+ 321     OPENJDK_TARGET_CPU_OSARCH="amd64"
+
+
+ 322   fi
+ 323   AC_SUBST(OPENJDK_TARGET_CPU_OSARCH)
+ 324 
+ 325   OPENJDK_TARGET_CPU_JLI="$OPENJDK_TARGET_CPU"
+ 326   if test "x$OPENJDK_TARGET_CPU" = xx86; then
+ 327     OPENJDK_TARGET_CPU_JLI="i386"
+ 328   elif test "x$OPENJDK_TARGET_OS" != xmacosx &amp;&amp; test "x$OPENJDK_TARGET_CPU" = xx86_64; then
+ 329     # On all platforms except macosx, we replace x86_64 with amd64.
+ 330     OPENJDK_TARGET_CPU_JLI="amd64"
+
+
+ 331   fi
+ 332   # Now setup the -D flags for building libjli.
+ 333   OPENJDK_TARGET_CPU_JLI_CFLAGS="-DLIBARCHNAME='\"$OPENJDK_TARGET_CPU_JLI\"'"
+ 334   if test "x$OPENJDK_TARGET_OS" = xsolaris; then
+ 335     if test "x$OPENJDK_TARGET_CPU_ARCH" = xsparc; then
+ 336       OPENJDK_TARGET_CPU_JLI_CFLAGS="$OPENJDK_TARGET_CPU_JLI_CFLAGS -DLIBARCH32NAME='\"sparc\"' -DLIBARCH64NAME='\"sparcv9\"'"
+ 337     elif test "x$OPENJDK_TARGET_CPU_ARCH" = xx86; then
+ 338       OPENJDK_TARGET_CPU_JLI_CFLAGS="$OPENJDK_TARGET_CPU_JLI_CFLAGS -DLIBARCH32NAME='\"i386\"' -DLIBARCH64NAME='\"amd64\"'"
+ 339     fi
+ 340   fi
+ 341   AC_SUBST(OPENJDK_TARGET_CPU_JLI_CFLAGS)
+ 342 
+ 343   if test "x$OPENJDK_TARGET_OS" = xmacosx; then
+ 344       OPENJDK_TARGET_OS_EXPORT_DIR=macosx
+ 345   else
+ 346       OPENJDK_TARGET_OS_EXPORT_DIR=${OPENJDK_TARGET_OS_TYPE}
+ 347   fi
+ 348   AC_SUBST(OPENJDK_TARGET_OS_EXPORT_DIR)
+ 349 
+ 350   if test "x$OPENJDK_TARGET_CPU_BITS" = x64; then
+
+</pre><hr></hr>
+</pre></td><td><pre>
+
+</pre><hr></hr><pre>
+ 269 AC_DEFUN([PLATFORM_SETUP_LEGACY_VARS],
+ 270 [
+ 271   # Also store the legacy naming of the cpu.
+ 272   # Ie i586 and amd64 instead of x86 and x86_64
+ 273   OPENJDK_TARGET_CPU_LEGACY="$OPENJDK_TARGET_CPU"
+ 274   if test "x$OPENJDK_TARGET_CPU" = xx86; then
+ 275     OPENJDK_TARGET_CPU_LEGACY="i586"
+ 276   elif test "x$OPENJDK_TARGET_OS" != xmacosx &amp;&amp; test "x$OPENJDK_TARGET_CPU" = xx86_64; then
+ 277     # On all platforms except MacOSX replace x86_64 with amd64.
+ 278     OPENJDK_TARGET_CPU_LEGACY="amd64"
+ 279   fi
+ 280   AC_SUBST(OPENJDK_TARGET_CPU_LEGACY)
+ 281 
+ 282   # And the second legacy naming of the cpu.
+ 283   # Ie i386 and amd64 instead of x86 and x86_64.
+ 284   OPENJDK_TARGET_CPU_LEGACY_LIB="$OPENJDK_TARGET_CPU"
+ 285   if test "x$OPENJDK_TARGET_CPU" = xx86; then
+ 286     OPENJDK_TARGET_CPU_LEGACY_LIB="i386"
+ 287   elif test "x$OPENJDK_TARGET_CPU" = xx86_64; then
+ 288     OPENJDK_TARGET_CPU_LEGACY_LIB="amd64"
+<span class="new"> 289   elif test "x$OPENJDK_TARGET_CPU" = xppc64 &amp;&amp; test "x$OPENJDK_TARGET_CPU_ENDIAN" = xlittle; then</span>
+<span class="new"> 290     OPENJDK_TARGET_CPU_LEGACY_LIB="ppc64le"</span>
+ 291   fi
+ 292   AC_SUBST(OPENJDK_TARGET_CPU_LEGACY_LIB)
+ 293 
+ 294   # This is the name of the cpu (but using i386 and amd64 instead of
+ 295   # x86 and x86_64, respectively), preceeded by a /, to be used when
+ 296   # locating libraries. On macosx, it's empty, though.
+ 297   OPENJDK_TARGET_CPU_LIBDIR="/$OPENJDK_TARGET_CPU_LEGACY_LIB"
+ 298   if test "x$OPENJDK_TARGET_OS" = xmacosx; then
+ 299     OPENJDK_TARGET_CPU_LIBDIR=""
+ 300   fi
+ 301   AC_SUBST(OPENJDK_TARGET_CPU_LIBDIR)
+ 302 
+ 303   # OPENJDK_TARGET_CPU_ISADIR is normally empty. On 64-bit Solaris systems, it is set to
+ 304   # /amd64 or /sparcv9. This string is appended to some library paths, like this:
+ 305   # /usr/lib${OPENJDK_TARGET_CPU_ISADIR}/libexample.so
+ 306   OPENJDK_TARGET_CPU_ISADIR=""
+ 307   if test "x$OPENJDK_TARGET_OS" = xsolaris; then
+ 308     if test "x$OPENJDK_TARGET_CPU" = xx86_64; then
+ 309       OPENJDK_TARGET_CPU_ISADIR="/amd64"
+ 310     elif test "x$OPENJDK_TARGET_CPU" = xsparcv9; then
+ 311       OPENJDK_TARGET_CPU_ISADIR="/sparcv9"
+ 312     fi
+ 313   fi
+ 314   AC_SUBST(OPENJDK_TARGET_CPU_ISADIR)
+ 315 
+ 316   # Setup OPENJDK_TARGET_CPU_OSARCH, which is used to set the os.arch Java system property
+ 317   OPENJDK_TARGET_CPU_OSARCH="$OPENJDK_TARGET_CPU"
+ 318   if test "x$OPENJDK_TARGET_OS" = xlinux &amp;&amp; test "x$OPENJDK_TARGET_CPU" = xx86; then
+ 319     # On linux only, we replace x86 with i386.
+ 320     OPENJDK_TARGET_CPU_OSARCH="i386"
+ 321   elif test "x$OPENJDK_TARGET_OS" != xmacosx &amp;&amp; test "x$OPENJDK_TARGET_CPU" = xx86_64; then
+ 322     # On all platforms except macosx, we replace x86_64 with amd64.
+ 323     OPENJDK_TARGET_CPU_OSARCH="amd64"
+<span class="new"> 324   elif test "x$OPENJDK_TARGET_CPU" = xppc64 &amp;&amp; test "x$OPENJDK_TARGET_CPU_ENDIAN" = xlittle; then</span>
+<span class="new"> 325     OPENJDK_TARGET_CPU_OSARCH="ppc64le"</span>
+ 326   fi
+ 327   AC_SUBST(OPENJDK_TARGET_CPU_OSARCH)
+ 328 
+ 329   OPENJDK_TARGET_CPU_JLI="$OPENJDK_TARGET_CPU"
+ 330   if test "x$OPENJDK_TARGET_CPU" = xx86; then
+ 331     OPENJDK_TARGET_CPU_JLI="i386"
+ 332   elif test "x$OPENJDK_TARGET_OS" != xmacosx &amp;&amp; test "x$OPENJDK_TARGET_CPU" = xx86_64; then
+ 333     # On all platforms except macosx, we replace x86_64 with amd64.
+ 334     OPENJDK_TARGET_CPU_JLI="amd64"
+<span class="new"> 335   elif test "x$OPENJDK_TARGET_CPU" = xppc64 &amp;&amp; test "x$OPENJDK_TARGET_CPU_ENDIAN" = xlittle; then</span>
+<span class="new"> 336     OPENJDK_TARGET_CPU_JLI="ppc64le"</span>
+ 337   fi
+ 338   # Now setup the -D flags for building libjli.
+ 339   OPENJDK_TARGET_CPU_JLI_CFLAGS="-DLIBARCHNAME='\"$OPENJDK_TARGET_CPU_JLI\"'"
+ 340   if test "x$OPENJDK_TARGET_OS" = xsolaris; then
+ 341     if test "x$OPENJDK_TARGET_CPU_ARCH" = xsparc; then
+ 342       OPENJDK_TARGET_CPU_JLI_CFLAGS="$OPENJDK_TARGET_CPU_JLI_CFLAGS -DLIBARCH32NAME='\"sparc\"' -DLIBARCH64NAME='\"sparcv9\"'"
+ 343     elif test "x$OPENJDK_TARGET_CPU_ARCH" = xx86; then
+ 344       OPENJDK_TARGET_CPU_JLI_CFLAGS="$OPENJDK_TARGET_CPU_JLI_CFLAGS -DLIBARCH32NAME='\"i386\"' -DLIBARCH64NAME='\"amd64\"'"
+ 345     fi
+ 346   fi
+ 347   AC_SUBST(OPENJDK_TARGET_CPU_JLI_CFLAGS)
+ 348 
+ 349   if test "x$OPENJDK_TARGET_OS" = xmacosx; then
+ 350       OPENJDK_TARGET_OS_EXPORT_DIR=macosx
+ 351   else
+ 352       OPENJDK_TARGET_OS_EXPORT_DIR=${OPENJDK_TARGET_OS_TYPE}
+ 353   fi
+ 354   AC_SUBST(OPENJDK_TARGET_OS_EXPORT_DIR)
+ 355 
+ 356   if test "x$OPENJDK_TARGET_CPU_BITS" = x64; then
+
+</pre><hr></hr>
+</pre></td>
+</tr></table>
+<center><a href='../../common/autoconf/generated-configure.sh.sdiff.html' target='_top'>&lt prev</a> <a href='../../index.html' target='_top'>index</a> next &gt</center>
+</body></html>
