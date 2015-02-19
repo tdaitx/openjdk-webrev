@@ -1,0 +1,11 @@
+--- old/src/java.desktop/share/native/libjsound/SoundDefs.h	2015-02-18 23:08:27.104453987 -0200
++++ new/src/java.desktop/share/native/libjsound/SoundDefs.h	2015-02-18 23:08:26.954453987 -0200
+@@ -43,6 +43,8 @@
+ #define X_ZERO          6
+ #define X_ARM           7
+ #define X_PPC           8
++#define X_PPC64         9
++#define X_PPC64LE      10
+ 
+ // **********************************
+ // Make sure you set X_PLATFORM and X_ARCH defines correctly.

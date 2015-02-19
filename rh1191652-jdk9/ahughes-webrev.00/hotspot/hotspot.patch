@@ -1,0 +1,30 @@
+--- old/make/defs.make	2015-02-18 23:07:13.184453987 -0200
++++ new/make/defs.make	2015-02-18 23:07:13.114453987 -0200
+@@ -330,6 +330,13 @@
+   LIBARCH/arm     = arm
+   LIBARCH/zero    = $(ZERO_LIBARCH)
+ 
++  # Override LIBARCH for ppc64le
++  ifeq ($(BUILDARCH), ppc64)
++    ifeq ($(OPENJDK_TARGET_CPU_ENDIAN), little)
++      LIBARCH = ppc64le
++    endif
++  endif
++
+   LP64_ARCH = sparcv9 amd64 ia64 ppc64 zero
+ endif
+ 
+--- old/src/os/linux/vm/os_linux.cpp	2015-02-18 23:07:13.484453987 -0200
++++ new/src/os/linux/vm/os_linux.cpp	2015-02-18 23:07:13.414453987 -0200
+@@ -240,7 +240,11 @@
+ #elif defined(PPC32)
+ static char cpu_arch[] = "ppc";
+ #elif defined(PPC64)
++#if defined(VM_LITTLE_ENDIAN)
++static char cpu_arch[] = "ppc64le";
++#else
+ static char cpu_arch[] = "ppc64";
++#endif
+ #elif defined(SPARC)
+   #ifdef _LP64
+ static char cpu_arch[] = "sparcv9";

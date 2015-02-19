@@ -1,0 +1,13 @@
+--- old/common/autoconf/hotspot-spec.gmk.in	2015-02-18 23:06:46.004453987 -0200
++++ new/common/autoconf/hotspot-spec.gmk.in	2015-02-18 23:06:45.954453987 -0200
+@@ -71,6 +71,10 @@
+ LIBARCH=$(OPENJDK_TARGET_CPU_LEGACY_LIB)
+ # Set the cpu architecture
+ ARCH=$(OPENJDK_TARGET_CPU_ARCH)
++# ppc64le uses the HotSpot ppc64 build
++ifeq ($(OPENJDK_TARGET_CPU), ppc64le)
++  ARCH=ppc64
++endif
+ # Legacy setting for building for a 64 bit machine.
+ # If yes then this expands to _LP64:=1
+ @LP64@

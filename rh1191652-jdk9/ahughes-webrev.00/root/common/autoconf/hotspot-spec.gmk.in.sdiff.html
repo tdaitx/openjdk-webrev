@@ -1,0 +1,189 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta charset="utf-8">
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="-1" />
+<!--
+   Note to customizers: the body of the webrev is IDed as SUNWwebrev
+   to allow easy overriding by users of webrev via the userContent.css
+   mechanism available in some browsers.
+
+   For example, to have all "removed" information be red instead of
+   brown, set a rule in your userContent.css file like:
+
+       body#SUNWwebrev span.removed { color: red ! important; }
+-->
+<style type="text/css" media="screen">
+body {
+    background-color: #eeeeee;
+}
+hr {
+    border: none 0;
+    border-top: 1px solid #aaa;
+    height: 1px;
+}
+div.summary {
+    font-size: .8em;
+    border-bottom: 1px solid #aaa;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+div.summary h2 {
+    margin-bottom: 0.3em;
+}
+div.summary table th {
+    text-align: right;
+    vertical-align: top;
+    white-space: nowrap;
+}
+span.lineschanged {
+    font-size: 0.7em;
+}
+span.oldmarker {
+    color: red;
+    font-size: large;
+    font-weight: bold;
+}
+span.newmarker {
+    color: green;
+    font-size: large;
+    font-weight: bold;
+}
+span.removed {
+    color: brown;
+}
+span.changed {
+    color: blue;
+}
+span.new {
+    color: blue;
+    font-weight: bold;
+}
+a.print { font-size: x-small; }
+
+</style>
+
+<style type="text/css" media="print">
+pre { font-size: 0.8em; font-family: courier, monospace; }
+span.removed { color: #444; font-style: italic }
+span.changed { font-weight: bold; }
+span.new { font-weight: bold; }
+span.newmarker { font-size: 1.2em; font-weight: bold; }
+span.oldmarker { font-size: 1.2em; font-weight: bold; }
+a.print {display: none}
+hr { border: none 0; border-top: 1px solid #aaa; height: 1px; }
+</style>
+
+<title>jdk9-dev Sdiff common/autoconf </title>
+</head><body id="SUNWwebrev">
+<center><a href='../../common/autoconf/generated-configure.sh.sdiff.html' target='_top'>&lt prev</a> <a href='../../index.html' target='_top'>index</a> <a href='../../common/autoconf/platform.m4.sdiff.html' target='_top'>next &gt</a></center>
+<h2>common/autoconf/hotspot-spec.gmk.in</h2>
+<a class="print" href="javascript:print()">Print this page</a>
+<pre></pre>
+
+<table><tr valign="top">
+<td><pre>
+
+</pre><hr></hr><pre>
+  54 ####################################################
+  55 #
+  56 # Legacy Hotspot support
+  57 
+  58 # If cross compiling, then define CROSS_COMPILE_ARCH:=cpu_name here.
+  59 @DEFINE_CROSS_COMPILE_ARCH@
+  60 
+  61 # Old name for OPENJDK_TARGET_OS (aix,bsd,hpux,linux,macosx,solaris,windows etc)
+  62 PLATFORM=$(OPENJDK_TARGET_OS)
+  63 # 32 or 64 bit
+  64 ARCH_DATA_MODEL=$(OPENJDK_TARGET_CPU_BITS)
+  65 
+  66 ALT_BOOTDIR=$(BOOT_JDK)
+  67 # Can be /sparcv9 or /amd64 on Solaris
+  68 ISA_DIR=$(OPENJDK_TARGET_CPU_ISADIR)
+  69 # Yet another name for arch used for an extra subdir below the jvm lib.
+  70 # Uses i386 and amd64, instead of x86 and x86_64.
+  71 LIBARCH=$(OPENJDK_TARGET_CPU_LEGACY_LIB)
+  72 # Set the cpu architecture
+  73 ARCH=$(OPENJDK_TARGET_CPU_ARCH)
+
+
+
+
+  74 # Legacy setting for building for a 64 bit machine.
+  75 # If yes then this expands to _LP64:=1
+  76 @LP64@
+  77 
+  78 # Legacy settings for zero
+  79 ZERO_ENDIANNESS=$(OPENJDK_TARGET_CPU_ENDIAN)
+  80 ZERO_LIBARCH=$(OPENJDK_TARGET_CPU_LEGACY_LIB)
+  81 ZERO_ARCHDEF=@ZERO_ARCHDEF@
+  82 ZERO_ARCHFLAG=@ZERO_ARCHFLAG@
+  83 LIBFFI_CFLAGS=@LIBFFI_CFLAGS@
+  84 LIBFFI_LIBS=@LIBFFI_LIBS@
+  85 
+  86 # Legacy settings for zeroshark
+  87 LLVM_CFLAGS=@LLVM_CFLAGS@
+  88 LLVM_LIBS=@LLVM_LIBS@
+  89 LLVM_LDFLAGS=@LLVM_LDFLAGS@
+  90 
+  91 ALT_OUTPUTDIR=$(HOTSPOT_OUTPUTDIR)
+  92 ALT_EXPORT_PATH=$(HOTSPOT_DIST)
+  93 
+
+</pre><hr></hr>
+</pre></td><td><pre>
+
+</pre><hr></hr><pre>
+  54 ####################################################
+  55 #
+  56 # Legacy Hotspot support
+  57 
+  58 # If cross compiling, then define CROSS_COMPILE_ARCH:=cpu_name here.
+  59 @DEFINE_CROSS_COMPILE_ARCH@
+  60 
+  61 # Old name for OPENJDK_TARGET_OS (aix,bsd,hpux,linux,macosx,solaris,windows etc)
+  62 PLATFORM=$(OPENJDK_TARGET_OS)
+  63 # 32 or 64 bit
+  64 ARCH_DATA_MODEL=$(OPENJDK_TARGET_CPU_BITS)
+  65 
+  66 ALT_BOOTDIR=$(BOOT_JDK)
+  67 # Can be /sparcv9 or /amd64 on Solaris
+  68 ISA_DIR=$(OPENJDK_TARGET_CPU_ISADIR)
+  69 # Yet another name for arch used for an extra subdir below the jvm lib.
+  70 # Uses i386 and amd64, instead of x86 and x86_64.
+  71 LIBARCH=$(OPENJDK_TARGET_CPU_LEGACY_LIB)
+  72 # Set the cpu architecture
+  73 ARCH=$(OPENJDK_TARGET_CPU_ARCH)
+<span class="new">  74 # ppc64le uses the HotSpot ppc64 build</span>
+<span class="new">  75 ifeq ($(OPENJDK_TARGET_CPU), ppc64le)</span>
+<span class="new">  76   ARCH=ppc64</span>
+<span class="new">  77 endif</span>
+  78 # Legacy setting for building for a 64 bit machine.
+  79 # If yes then this expands to _LP64:=1
+  80 @LP64@
+  81 
+  82 # Legacy settings for zero
+  83 ZERO_ENDIANNESS=$(OPENJDK_TARGET_CPU_ENDIAN)
+  84 ZERO_LIBARCH=$(OPENJDK_TARGET_CPU_LEGACY_LIB)
+  85 ZERO_ARCHDEF=@ZERO_ARCHDEF@
+  86 ZERO_ARCHFLAG=@ZERO_ARCHFLAG@
+  87 LIBFFI_CFLAGS=@LIBFFI_CFLAGS@
+  88 LIBFFI_LIBS=@LIBFFI_LIBS@
+  89 
+  90 # Legacy settings for zeroshark
+  91 LLVM_CFLAGS=@LLVM_CFLAGS@
+  92 LLVM_LIBS=@LLVM_LIBS@
+  93 LLVM_LDFLAGS=@LLVM_LDFLAGS@
+  94 
+  95 ALT_OUTPUTDIR=$(HOTSPOT_OUTPUTDIR)
+  96 ALT_EXPORT_PATH=$(HOTSPOT_DIST)
+  97 
+
+</pre><hr></hr>
+</pre></td>
+</tr></table>
+<center><a href='../../common/autoconf/generated-configure.sh.sdiff.html' target='_top'>&lt prev</a> <a href='../../index.html' target='_top'>index</a> <a href='../../common/autoconf/platform.m4.sdiff.html' target='_top'>next &gt</a></center>
+</body></html>

@@ -1,0 +1,11 @@
+--- old/common/autoconf/platform.m4	2015-02-18 23:06:46.274453987 -0200
++++ new/common/autoconf/platform.m4	2015-02-18 23:06:46.224453987 -0200
+@@ -61,7 +61,7 @@
+       VAR_CPU_ENDIAN=big
+       ;;
+     powerpc64le)
+-      VAR_CPU=ppc64
++      VAR_CPU=ppc64le
+       VAR_CPU_ARCH=ppc
+       VAR_CPU_BITS=64
+       VAR_CPU_ENDIAN=little

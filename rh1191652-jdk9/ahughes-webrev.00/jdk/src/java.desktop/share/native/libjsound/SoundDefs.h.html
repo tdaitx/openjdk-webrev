@@ -1,0 +1,237 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta charset="utf-8">
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="-1" />
+<!--
+   Note to customizers: the body of the webrev is IDed as SUNWwebrev
+   to allow easy overriding by users of webrev via the userContent.css
+   mechanism available in some browsers.
+
+   For example, to have all "removed" information be red instead of
+   brown, set a rule in your userContent.css file like:
+
+       body#SUNWwebrev span.removed { color: red ! important; }
+-->
+<style type="text/css" media="screen">
+body {
+    background-color: #eeeeee;
+}
+hr {
+    border: none 0;
+    border-top: 1px solid #aaa;
+    height: 1px;
+}
+div.summary {
+    font-size: .8em;
+    border-bottom: 1px solid #aaa;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+div.summary h2 {
+    margin-bottom: 0.3em;
+}
+div.summary table th {
+    text-align: right;
+    vertical-align: top;
+    white-space: nowrap;
+}
+span.lineschanged {
+    font-size: 0.7em;
+}
+span.oldmarker {
+    color: red;
+    font-size: large;
+    font-weight: bold;
+}
+span.newmarker {
+    color: green;
+    font-size: large;
+    font-weight: bold;
+}
+span.removed {
+    color: brown;
+}
+span.changed {
+    color: blue;
+}
+span.new {
+    color: blue;
+    font-weight: bold;
+}
+a.print { font-size: x-small; }
+
+</style>
+
+<style type="text/css" media="print">
+pre { font-size: 0.8em; font-family: courier, monospace; }
+span.removed { color: #444; font-style: italic }
+span.changed { font-weight: bold; }
+span.new { font-weight: bold; }
+span.newmarker { font-size: 1.2em; font-weight: bold; }
+span.oldmarker { font-size: 1.2em; font-weight: bold; }
+a.print {display: none}
+hr { border: none 0; border-top: 1px solid #aaa; height: 1px; }
+</style>
+
+<title>New src/java.desktop/share/native/libjsound/SoundDefs.h</title>
+<body id="SUNWwebrev">
+<pre>
+   1 /*
+   2  * Copyright (c) 2007, 2012, Oracle and/or its affiliates. All rights reserved.
+   3  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+   4  *
+   5  * This code is free software; you can redistribute it and/or modify it
+   6  * under the terms of the GNU General Public License version 2 only, as
+   7  * published by the Free Software Foundation.  Oracle designates this
+   8  * particular file as subject to the "Classpath" exception as provided
+   9  * by Oracle in the LICENSE file that accompanied this code.
+  10  *
+  11  * This code is distributed in the hope that it will be useful, but WITHOUT
+  12  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+  13  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+  14  * version 2 for more details (a copy is included in the LICENSE file that
+  15  * accompanied this code).
+  16  *
+  17  * You should have received a copy of the GNU General Public License version
+  18  * 2 along with this work; if not, write to the Free Software Foundation,
+  19  * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+  20  *
+  21  * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+  22  * or visit www.oracle.com if you need additional information or have any
+  23  * questions.
+  24  */
+  25 
+  26 #ifndef __SOUNDDEFS_INCLUDED__
+  27 #define __SOUNDDEFS_INCLUDED__
+  28 
+  29 
+  30 // types for X_PLATFORM
+  31 #define X_WINDOWS       1
+  32 #define X_SOLARIS       2
+  33 #define X_LINUX         3
+  34 #define X_BSD           4
+  35 #define X_MACOSX        5
+  36 
+  37 // types for X_ARCH
+  38 #define X_I586          1
+  39 #define X_SPARC         2
+  40 #define X_SPARCV9       3
+  41 #define X_IA64          4
+  42 #define X_AMD64         5
+  43 #define X_ZERO          6
+  44 #define X_ARM           7
+  45 #define X_PPC           8
+  46 #define X_PPC64         9
+  47 #define X_PPC64LE      10
+  48 
+  49 // **********************************
+  50 // Make sure you set X_PLATFORM and X_ARCH defines correctly.
+  51 // Everything depends upon this flag being setup correctly.
+  52 // **********************************
+  53 
+  54 #if (X_PLATFORM == X_MACOSX) &amp;&amp; !defined(X_ARCH)
+  55 #if __x86_64__
+  56 #define X_ARCH X_AMD64
+  57 #endif
+  58 #if __i386__
+  59 #define X_ARCH X_I586
+  60 #endif
+  61 #endif
+  62 
+  63 #if (!defined(X_PLATFORM) || !defined(X_ARCH))
+  64 #error "You need to define X_PLATFORM and X_ARCH outside of the source. Use the types above."
+  65 #endif
+  66 
+  67 
+  68 // following is needed for _LP64
+  69 #if ((X_PLATFORM == X_SOLARIS) || (X_PLATFORM == X_LINUX) || (X_PLATFORM == X_MACOSX))
+  70 #include &lt;sys/types.h&gt;
+  71 #endif
+  72 
+  73 #if X_PLATFORM == X_WINDOWS
+  74 #ifndef WIN32_LEAN_AND_MEAN
+  75 #define WIN32_LEAN_AND_MEAN
+  76 #endif
+  77 #include &lt;windows.h&gt;
+  78 #endif /* X_PLATFORM == X_WINDOWS */
+  79 
+  80 
+  81 /*
+  82 * These types are defined elsewhere for newer 32/64-bit Windows
+  83 * header files, but not on Solaris/Linux (X_PLATFORM != X_WINDOWS)
+  84 */
+  85 #if (X_PLATFORM != X_WINDOWS)
+  86 
+  87 typedef unsigned char           UINT8;
+  88 typedef char                    INT8;
+  89 typedef short                   INT16;
+  90 typedef unsigned short          UINT16;
+  91 #ifdef _LP64
+  92 typedef int                     INT32;
+  93 typedef unsigned int            UINT32;
+  94 typedef unsigned long           UINT64;
+  95 typedef long                    INT64;
+  96 #else /* _LP64 */
+  97 typedef long                    INT32;
+  98 typedef unsigned long           UINT32;
+  99 /* generic 64 bit ? */
+ 100 typedef unsigned long long      UINT64;
+ 101 typedef long long               INT64;
+ 102 #endif /* _LP64 */
+ 103 
+ 104 typedef unsigned long           UINT_PTR;
+ 105 typedef long                    INT_PTR;
+ 106 
+ 107 #endif /* X_PLATFORM != X_WINDOWS */
+ 108 
+ 109 
+ 110 typedef unsigned char   UBYTE;
+ 111 typedef char            SBYTE;
+ 112 
+ 113 
+ 114 #undef TRUE
+ 115 #undef FALSE
+ 116 
+ 117 #ifndef TRUE
+ 118 #define TRUE    1
+ 119 #endif
+ 120 
+ 121 #ifndef FALSE
+ 122 #define FALSE   0
+ 123 #endif
+ 124 
+ 125 #undef NULL
+ 126 #ifndef NULL
+ 127 #define NULL    0L
+ 128 #endif
+ 129 
+ 130 
+ 131 
+ 132 
+ 133 #if X_PLATFORM == X_WINDOWS
+ 134 #include &lt;stdlib.h&gt;
+ 135 #define INLINE          _inline
+ 136 #endif
+ 137 
+ 138 
+ 139 #if X_PLATFORM == X_SOLARIS
+ 140 #define INLINE
+ 141 #endif
+ 142 
+ 143 
+ 144 #if X_PLATFORM == X_LINUX
+ 145 #define INLINE          inline
+ 146 #endif
+ 147 
+ 148 
+ 149 #if (X_PLATFORM == X_BSD) || (X_PLATFORM == X_MACOSX)
+ 150 #define INLINE          inline
+ 151 #endif
+ 152 
+ 153 
+ 154 #endif  // __SOUNDDEFS_INCLUDED__
+</pre></body></html>

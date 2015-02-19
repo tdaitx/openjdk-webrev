@@ -1,0 +1,3 @@
+common/autoconf/generated-configure.sh
+common/autoconf/hotspot-spec.gmk.in
+common/autoconf/platform.m4

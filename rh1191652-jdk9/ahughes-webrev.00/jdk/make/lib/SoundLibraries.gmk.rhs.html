@@ -1,0 +1,420 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta charset="utf-8">
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="-1" />
+<!--
+   Note to customizers: the body of the webrev is IDed as SUNWwebrev
+   to allow easy overriding by users of webrev via the userContent.css
+   mechanism available in some browsers.
+
+   For example, to have all "removed" information be red instead of
+   brown, set a rule in your userContent.css file like:
+
+       body#SUNWwebrev span.removed { color: red ! important; }
+-->
+<style type="text/css" media="screen">
+body {
+    background-color: #eeeeee;
+}
+hr {
+    border: none 0;
+    border-top: 1px solid #aaa;
+    height: 1px;
+}
+div.summary {
+    font-size: .8em;
+    border-bottom: 1px solid #aaa;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+div.summary h2 {
+    margin-bottom: 0.3em;
+}
+div.summary table th {
+    text-align: right;
+    vertical-align: top;
+    white-space: nowrap;
+}
+span.lineschanged {
+    font-size: 0.7em;
+}
+span.oldmarker {
+    color: red;
+    font-size: large;
+    font-weight: bold;
+}
+span.newmarker {
+    color: green;
+    font-size: large;
+    font-weight: bold;
+}
+span.removed {
+    color: brown;
+}
+span.changed {
+    color: blue;
+}
+span.new {
+    color: blue;
+    font-weight: bold;
+}
+a.print { font-size: x-small; }
+
+</style>
+
+<style type="text/css" media="print">
+pre { font-size: 0.8em; font-family: courier, monospace; }
+span.removed { color: #444; font-style: italic }
+span.changed { font-weight: bold; }
+span.new { font-weight: bold; }
+span.newmarker { font-size: 1.2em; font-weight: bold; }
+span.oldmarker { font-size: 1.2em; font-weight: bold; }
+a.print {display: none}
+hr { border: none 0; border-top: 1px solid #aaa; height: 1px; }
+</style>
+
+    <script type="text/javascript" src="../../ancnav.js"></script>
+    </head>
+    <body id="SUNWwebrev" onkeypress="keypress(event);">
+    <a name="0"></a>
+    <pre></pre><hr></hr>
+<pre>
+   1 #
+   2 # Copyright (c) 2011, 2014, Oracle and/or its affiliates. All rights reserved.
+   3 # DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+   4 #
+   5 # This code is free software; you can redistribute it and/or modify it
+   6 # under the terms of the GNU General Public License version 2 only, as
+   7 # published by the Free Software Foundation.  Oracle designates this
+   8 # particular file as subject to the "Classpath" exception as provided
+   9 # by Oracle in the LICENSE file that accompanied this code.
+  10 #
+  11 # This code is distributed in the hope that it will be useful, but WITHOUT
+  12 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+  13 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+  14 # version 2 for more details (a copy is included in the LICENSE file that
+  15 # accompanied this code).
+  16 #
+  17 # You should have received a copy of the GNU General Public License version
+  18 # 2 along with this work; if not, write to the Free Software Foundation,
+  19 # Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+  20 #
+  21 # Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+  22 # or visit www.oracle.com if you need additional information or have any
+  23 # questions.
+  24 #
+  25 
+  26 LIBJSOUND_SRC_DIRS := \
+  27     $(JDK_TOPDIR)/src/java.desktop/share/native/libjsound \
+  28     $(JDK_TOPDIR)/src/java.desktop/$(OPENJDK_TARGET_OS_TYPE)/native/libjsound \
+  29     #
+  30 LIBJSOUND_CFLAGS := \
+  31     -I$(SUPPORT_OUTPUTDIR)/headers/java.desktop \
+  32     $(LIBJAVA_HEADER_FLAGS) \
+  33     $(foreach dir, $(LIBJSOUND_SRC_DIRS), -I$(dir)) \
+  34     #
+  35 
+  36 LIBJSOUND_SRC_FILES := Utilities.c Platform.c
+  37 
+  38 LIBJSOUND_LANG := C
+  39 
+  40 EXTRA_SOUND_JNI_LIBS :=
+  41 
+  42 LIBJSOUND_MIDIFILES := \
+  43     MidiInDevice.c \
+  44     MidiInDeviceProvider.c \
+  45     MidiOutDevice.c \
+  46     MidiOutDeviceProvider.c \
+  47     PlatformMidi.c
+  48 
+  49 # files needed for ports
+  50 LIBJSOUND_PORTFILES := \
+  51     PortMixerProvider.c \
+  52     PortMixer.c
+  53 
+  54 # files needed for direct audio
+  55 LIBJSOUND_DAUDIOFILES := \
+  56     DirectAudioDeviceProvider.c \
+  57     DirectAudioDevice.c
+  58 
+  59 ifeq ($(OPENJDK_TARGET_OS), windows)
+  60   EXTRA_SOUND_JNI_LIBS += jsoundds
+  61   LIBJSOUND_CFLAGS += -DX_PLATFORM=X_WINDOWS \
+  62       -DUSE_PLATFORM_MIDI_OUT=TRUE \
+  63       -DUSE_PLATFORM_MIDI_IN=TRUE \
+  64       -DUSE_PORTS=TRUE
+  65   LIBJSOUND_SRC_FILES += \
+  66       PLATFORM_API_WinOS_MidiIn.cpp \
+  67       PLATFORM_API_WinOS_MidiOut.c \
+  68       PLATFORM_API_WinOS_Util.c \
+  69       PLATFORM_API_WinOS_Ports.c
+  70   LIBJSOUND_SRC_FILES += $(LIBJSOUND_MIDIFILES)
+  71   LIBJSOUND_SRC_FILES += $(LIBJSOUND_PORTFILES)
+  72 endif # OPENJDK_TARGET_OS windows
+  73 
+  74 ifeq ($(OPENJDK_TARGET_OS), linux)
+  75   EXTRA_SOUND_JNI_LIBS += jsoundalsa
+  76   LIBJSOUND_CFLAGS += -DX_PLATFORM=X_LINUX
+  77 endif # OPENJDK_TARGET_OS linux
+  78 
+  79 ifeq ($(OPENJDK_TARGET_OS), aix)
+  80   LIBJSOUND_CFLAGS += -DX_PLATFORM=X_AIX
+  81 endif # OPENJDK_TARGET_OS aix
+  82 
+  83 ifeq ($(OPENJDK_TARGET_OS), macosx)
+  84   LIBJSOUND_LANG := C++
+  85   LIBJSOUND_CFLAGS += -DX_PLATFORM=X_MACOSX \
+  86       -DUSE_PORTS=TRUE \
+  87       -DUSE_DAUDIO=TRUE \
+  88       -DUSE_PLATFORM_MIDI_OUT=TRUE \
+  89       -DUSE_PLATFORM_MIDI_IN=TRUE
+  90   LIBJSOUND_SRC_DIRS += $(JDK_TOPDIR)/src/java.desktop/macosx/native/libjsound
+  91   LIBJSOUND_SRC_FILES += \
+  92       PLATFORM_API_MacOSX_Utils.cpp \
+  93       PLATFORM_API_MacOSX_PCM.cpp \
+  94       PLATFORM_API_MacOSX_Ports.cpp \
+  95       PLATFORM_API_MacOSX_MidiIn.c \
+  96       PLATFORM_API_MacOSX_MidiOut.c \
+  97       PLATFORM_API_MacOSX_MidiUtils.c
+  98   LIBJSOUND_SRC_FILES += $(LIBJSOUND_MIDIFILES)
+  99   LIBJSOUND_SRC_FILES += $(LIBJSOUND_PORTFILES)
+ 100   LIBJSOUND_SRC_FILES += $(LIBJSOUND_DAUDIOFILES)
+ 101 endif # OPENJDK_TARGET_OS macosx
+ 102 
+ 103 ifeq ($(OPENJDK_TARGET_OS), solaris)
+ 104   LIBJSOUND_CFLAGS += -DX_PLATFORM=X_SOLARIS \
+ 105       -DUSE_PORTS=TRUE \
+ 106       -DUSE_DAUDIO=TRUE
+ 107   LIBJSOUND_SRC_FILES += \
+ 108       PLATFORM_API_SolarisOS_Utils.c \
+ 109       PLATFORM_API_SolarisOS_Ports.c \
+ 110       PLATFORM_API_SolarisOS_PCM.c
+ 111   LIBJSOUND_SRC_FILES += $(LIBJSOUND_MIDIFILES)
+ 112   LIBJSOUND_SRC_FILES += $(LIBJSOUND_PORTFILES)
+ 113   LIBJSOUND_SRC_FILES += $(LIBJSOUND_DAUDIOFILES)
+ 114 endif # OPENJDK_TARGET_OS solaris
+ 115 
+ 116 
+ 117 ifeq ($(JVM_VARIANT_ZERO), true)
+ 118   LIBJSOUND_CFLAGS += -DX_ARCH=X_ZERO
+ 119 else
+ 120   ifeq ($(OPENJDK_TARGET_CPU), x86)
+ 121     LIBJSOUND_CFLAGS += -DX_ARCH=X_I586
+ 122   endif
+ 123 
+ 124   ifeq ($(OPENJDK_TARGET_CPU), sparc)
+ 125     LIBJSOUND_CFLAGS += -DX_ARCH=X_SPARC
+ 126   endif
+ 127 
+ 128   ifeq ($(OPENJDK_TARGET_CPU), sparcv9)
+ 129     LIBJSOUND_CFLAGS += -DX_ARCH=X_SPARCV9
+ 130   endif
+ 131 
+ 132   ifeq ($(OPENJDK_TARGET_CPU), x86_64)
+ 133     LIBJSOUND_CFLAGS += -DX_ARCH=X_AMD64
+ 134   endif
+ 135 
+ 136   ifeq ($(OPENJDK_TARGET_CPU), arm)
+ 137     LIBJSOUND_CFLAGS += -DX_ARCH=X_ARM
+ 138   endif
+ 139 
+ 140   ifeq ($(OPENJDK_TARGET_CPU), ppc)
+ 141     LIBJSOUND_CFLAGS += -DX_ARCH=X_PPC
+ 142   endif
+ 143 
+ 144   ifeq ($(OPENJDK_TARGET_CPU), ppc64)
+ 145        LIBJSOUND_CFLAGS += -DX_ARCH=X_PPC64
+ 146   endif
+<a name="1" id="anc1"></a><span class="new"> 147 </span>
+<span class="new"> 148   ifeq ($(OPENJDK_TARGET_CPU), ppc64le)</span>
+<span class="new"> 149        LIBJSOUND_CFLAGS += -DX_ARCH=X_PPC64LE</span>
+<span class="new"> 150   endif</span>
+ 151 endif
+ 152 
+ 153 LIBJSOUND_CFLAGS += -DEXTRA_SOUND_JNI_LIBS='"$(EXTRA_SOUND_JNI_LIBS)"'
+ 154 
+ 155 $(eval $(call SetupNativeCompilation,BUILD_LIBJSOUND, \
+ 156     LIBRARY := jsound, \
+ 157     OUTPUT_DIR := $(INSTALL_LIBRARIES_HERE), \
+ 158     SRC := $(LIBJSOUND_SRC_DIRS), \
+ 159     INCLUDE_FILES := $(LIBJSOUND_SRC_FILES), \
+ 160     LANG := $(LIBJSOUND_LANG), \
+ 161     OPTIMIZATION := LOW, \
+ 162     CFLAGS := $(CFLAGS_JDKLIB) \
+ 163         $(LIBJSOUND_CFLAGS), \
+ 164     CXXFLAGS := $(CXXFLAGS_JDKLIB) $(LIBJSOUND_CFLAGS), \
+ 165     MAPFILE := $(JDK_TOPDIR)/make/mapfiles/libjsound/mapfile-vers, \
+ 166     LDFLAGS := $(LDFLAGS_JDKLIB) \
+ 167         $(call SET_SHARED_LIBRARY_ORIGIN), \
+ 168     LDFLAGS_macosx := -framework CoreAudio -framework CoreFoundation \
+ 169         -framework CoreServices -framework AudioUnit $(LIBCXX) \
+ 170         -framework CoreMIDI -framework AudioToolbox, \
+ 171     LDFLAGS_windows := $(WIN_JAVA_LIB) advapi32.lib winmm.lib, \
+ 172     LDFLAGS_SUFFIX_unix := -ljava -ljvm, \
+ 173     LDFLAGS_SUFFIX_solaris := -lc, \
+ 174     VERSIONINFO_RESOURCE := $(GLOBAL_VERSION_INFO_RESOURCE), \
+ 175     RC_FLAGS := $(RC_FLAGS) \
+ 176         -D "JDK_FNAME=jsound.dll" \
+ 177         -D "JDK_INTERNAL_NAME=jsound" \
+ 178         -D "JDK_FTYPE=0x2L", \
+ 179     OBJECT_DIR := $(SUPPORT_OUTPUTDIR)/native/$(MODULE)/libjsound, \
+ 180     DEBUG_SYMBOLS := $(DEBUG_ALL_BINARIES)))
+ 181 
+ 182 $(BUILD_LIBJSOUND): $(BUILD_LIBJAVA)
+ 183 
+ 184 TARGETS += $(BUILD_LIBJSOUND)
+ 185 
+ 186 ##########################################################################################
+ 187 
+ 188 ifneq ($(filter jsoundalsa, $(EXTRA_SOUND_JNI_LIBS)), )
+ 189 
+ 190   $(eval $(call SetupNativeCompilation,BUILD_LIBJSOUNDALSA, \
+ 191       LIBRARY := jsoundalsa, \
+ 192       OUTPUT_DIR := $(INSTALL_LIBRARIES_HERE), \
+ 193       SRC := $(LIBJSOUND_SRC_DIRS), \
+ 194       INCLUDE_FILES := Utilities.c $(LIBJSOUND_MIDIFILES) $(LIBJSOUND_PORTFILES) \
+ 195           $(LIBJSOUND_DAUDIOFILES) \
+ 196           PLATFORM_API_LinuxOS_ALSA_CommonUtils.c \
+ 197           PLATFORM_API_LinuxOS_ALSA_PCM.c \
+ 198           PLATFORM_API_LinuxOS_ALSA_PCMUtils.c \
+ 199           PLATFORM_API_LinuxOS_ALSA_MidiIn.c \
+ 200           PLATFORM_API_LinuxOS_ALSA_MidiOut.c \
+ 201           PLATFORM_API_LinuxOS_ALSA_MidiUtils.c \
+ 202           PLATFORM_API_LinuxOS_ALSA_Ports.c, \
+ 203       LANG := C, \
+ 204       OPTIMIZATION := LOW, \
+ 205       CFLAGS := $(CFLAGS_JDKLIB) $(ALSA_CFLAGS) \
+ 206           $(LIBJSOUND_CFLAGS) \
+ 207           -DUSE_DAUDIO=TRUE \
+ 208           -DUSE_PORTS=TRUE \
+ 209           -DUSE_PLATFORM_MIDI_OUT=TRUE \
+ 210           -DUSE_PLATFORM_MIDI_IN=TRUE, \
+ 211       MAPFILE := $(JDK_TOPDIR)/make/mapfiles/libjsoundalsa/mapfile-vers, \
+ 212       LDFLAGS := $(LDFLAGS_JDKLIB) \
+ 213           $(call SET_SHARED_LIBRARY_ORIGIN), \
+ 214       LDFLAGS_SUFFIX := $(ALSA_LIBS) -ljava -ljvm, \
+ 215       OBJECT_DIR := $(SUPPORT_OUTPUTDIR)/native/$(MODULE)/libjsoundalsa, \
+ 216       DEBUG_SYMBOLS := $(DEBUG_ALL_BINARIES)))
+ 217 
+ 218   $(BUILD_LIBJSOUNDALSA): $(BUILD_LIBJAVA)
+ 219 
+ 220   TARGETS += $(BUILD_LIBJSOUNDALSA)
+ 221 
+ 222 endif
+ 223 
+ 224 ##########################################################################################
+ 225 
+ 226 ifneq ($(filter jsoundds, $(EXTRA_SOUND_JNI_LIBS)), )
+ 227 
+ 228   $(eval $(call SetupNativeCompilation,BUILD_LIBJSOUNDDS, \
+ 229       LIBRARY := jsoundds, \
+ 230       OUTPUT_DIR := $(INSTALL_LIBRARIES_HERE), \
+ 231       SRC := $(LIBJSOUND_SRC_DIRS), \
+ 232       INCLUDE_FILES := Utilities.c $(LIBJSOUND_DAUDIOFILES) \
+ 233           PLATFORM_API_WinOS_DirectSound.cpp, \
+ 234       LANG := C++, \
+ 235       OPTIMIZATION := LOW, \
+ 236       CFLAGS := $(CFLAGS_JDKLIB) \
+ 237           $(LIBJSOUND_CFLAGS) \
+ 238           -DUSE_DAUDIO=TRUE, \
+ 239       LDFLAGS := $(LDFLAGS_JDKLIB) $(LDFLAGS_CXX_JDK) \
+ 240           $(call SET_SHARED_LIBRARY_ORIGIN), \
+ 241       LDFLAGS_SUFFIX := $(LDFLAGS_JDKLIB_SUFFIX) dsound.lib winmm.lib user32.lib ole32.lib, \
+ 242       VERSIONINFO_RESOURCE := $(GLOBAL_VERSION_INFO_RESOURCE), \
+ 243       RC_FLAGS := $(RC_FLAGS) \
+ 244           -D "JDK_FNAME=jsoundds.dll" \
+ 245           -D "JDK_INTERNAL_NAME=jsoundds" \
+ 246           -D "JDK_FTYPE=0x2L", \
+ 247       OBJECT_DIR := $(SUPPORT_OUTPUTDIR)/native/$(MODULE)/libjsoundds, \
+ 248       DEBUG_SYMBOLS := $(DEBUG_ALL_BINARIES)))
+ 249 
+ 250   $(BUILD_LIBJSOUNDDS): $(BUILD_LIBJAVA)
+ 251 
+ 252   TARGETS += $(BUILD_LIBJSOUNDDS)
+ 253 
+ 254 endif
+<a name="2" id="anc2"></a><b style="font-size: large; color: red">--- EOF ---</b>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre><form name="eof"><input name="value" value="2" type="hidden" /></form></body></html>

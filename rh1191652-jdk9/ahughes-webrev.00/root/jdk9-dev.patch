@@ -1,0 +1,53 @@
+--- old/common/autoconf/generated-configure.sh	2015-02-18 23:06:44.834453987 -0200
++++ new/common/autoconf/generated-configure.sh	2015-02-18 23:06:44.764453987 -0200
+@@ -4335,7 +4335,7 @@
+ #CUSTOM_AUTOCONF_INCLUDE
+ 
+ # Do not change or remove the following line, it is needed for consistency checks:
+-DATE_WHEN_GENERATED=1423567509
++DATE_WHEN_GENERATED=1424261413
+ 
+ ###############################################################################
+ #
+@@ -13600,7 +13600,7 @@
+       VAR_CPU_ENDIAN=big
+       ;;
+     powerpc64le)
+-      VAR_CPU=ppc64
++      VAR_CPU=ppc64le
+       VAR_CPU_ARCH=ppc
+       VAR_CPU_BITS=64
+       VAR_CPU_ENDIAN=little
+@@ -13733,7 +13733,7 @@
+       VAR_CPU_ENDIAN=big
+       ;;
+     powerpc64le)
+-      VAR_CPU=ppc64
++      VAR_CPU=ppc64le
+       VAR_CPU_ARCH=ppc
+       VAR_CPU_BITS=64
+       VAR_CPU_ENDIAN=little
+--- old/common/autoconf/hotspot-spec.gmk.in	2015-02-18 23:06:46.004453987 -0200
++++ new/common/autoconf/hotspot-spec.gmk.in	2015-02-18 23:06:45.954453987 -0200
+@@ -71,6 +71,10 @@
+ LIBARCH=$(OPENJDK_TARGET_CPU_LEGACY_LIB)
+ # Set the cpu architecture
+ ARCH=$(OPENJDK_TARGET_CPU_ARCH)
++# ppc64le uses the HotSpot ppc64 build
++ifeq ($(OPENJDK_TARGET_CPU), ppc64le)
++  ARCH=ppc64
++endif
+ # Legacy setting for building for a 64 bit machine.
+ # If yes then this expands to _LP64:=1
+ @LP64@
+--- old/common/autoconf/platform.m4	2015-02-18 23:06:46.274453987 -0200
++++ new/common/autoconf/platform.m4	2015-02-18 23:06:46.224453987 -0200
+@@ -61,7 +61,7 @@
+       VAR_CPU_ENDIAN=big
+       ;;
+     powerpc64le)
+-      VAR_CPU=ppc64
++      VAR_CPU=ppc64le
+       VAR_CPU_ARCH=ppc
+       VAR_CPU_BITS=64
+       VAR_CPU_ENDIAN=little

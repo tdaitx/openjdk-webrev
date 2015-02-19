@@ -1,0 +1,13 @@
+--- old/make/lib/SoundLibraries.gmk	2015-02-18 23:08:26.704453987 -0200
++++ new/make/lib/SoundLibraries.gmk	2015-02-18 23:08:26.564453987 -0200
+@@ -144,6 +144,10 @@
+   ifeq ($(OPENJDK_TARGET_CPU), ppc64)
+        LIBJSOUND_CFLAGS += -DX_ARCH=X_PPC64
+   endif
++
++  ifeq ($(OPENJDK_TARGET_CPU), ppc64le)
++       LIBJSOUND_CFLAGS += -DX_ARCH=X_PPC64LE
++  endif
+ endif
+ 
+ LIBJSOUND_CFLAGS += -DEXTRA_SOUND_JNI_LIBS='"$(EXTRA_SOUND_JNI_LIBS)"'

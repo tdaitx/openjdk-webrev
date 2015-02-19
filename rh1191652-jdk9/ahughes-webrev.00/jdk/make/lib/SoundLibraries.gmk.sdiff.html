@@ -1,0 +1,189 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta charset="utf-8">
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="-1" />
+<!--
+   Note to customizers: the body of the webrev is IDed as SUNWwebrev
+   to allow easy overriding by users of webrev via the userContent.css
+   mechanism available in some browsers.
+
+   For example, to have all "removed" information be red instead of
+   brown, set a rule in your userContent.css file like:
+
+       body#SUNWwebrev span.removed { color: red ! important; }
+-->
+<style type="text/css" media="screen">
+body {
+    background-color: #eeeeee;
+}
+hr {
+    border: none 0;
+    border-top: 1px solid #aaa;
+    height: 1px;
+}
+div.summary {
+    font-size: .8em;
+    border-bottom: 1px solid #aaa;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+div.summary h2 {
+    margin-bottom: 0.3em;
+}
+div.summary table th {
+    text-align: right;
+    vertical-align: top;
+    white-space: nowrap;
+}
+span.lineschanged {
+    font-size: 0.7em;
+}
+span.oldmarker {
+    color: red;
+    font-size: large;
+    font-weight: bold;
+}
+span.newmarker {
+    color: green;
+    font-size: large;
+    font-weight: bold;
+}
+span.removed {
+    color: brown;
+}
+span.changed {
+    color: blue;
+}
+span.new {
+    color: blue;
+    font-weight: bold;
+}
+a.print { font-size: x-small; }
+
+</style>
+
+<style type="text/css" media="print">
+pre { font-size: 0.8em; font-family: courier, monospace; }
+span.removed { color: #444; font-style: italic }
+span.changed { font-weight: bold; }
+span.new { font-weight: bold; }
+span.newmarker { font-size: 1.2em; font-weight: bold; }
+span.oldmarker { font-size: 1.2em; font-weight: bold; }
+a.print {display: none}
+hr { border: none 0; border-top: 1px solid #aaa; height: 1px; }
+</style>
+
+<title>jdk Sdiff make/lib </title>
+</head><body id="SUNWwebrev">
+<center>&lt prev <a href='../../index.html' target='_top'>index</a> <a href='../../src/java.desktop/share/native/libjsound/SoundDefs.h.sdiff.html' target='_top'>next &gt</a></center>
+<h2>make/lib/SoundLibraries.gmk</h2>
+<a class="print" href="javascript:print()">Print this page</a>
+<pre></pre>
+
+<table><tr valign="top">
+<td><pre>
+
+</pre><hr></hr><pre>
+ 127 
+ 128   ifeq ($(OPENJDK_TARGET_CPU), sparcv9)
+ 129     LIBJSOUND_CFLAGS += -DX_ARCH=X_SPARCV9
+ 130   endif
+ 131 
+ 132   ifeq ($(OPENJDK_TARGET_CPU), x86_64)
+ 133     LIBJSOUND_CFLAGS += -DX_ARCH=X_AMD64
+ 134   endif
+ 135 
+ 136   ifeq ($(OPENJDK_TARGET_CPU), arm)
+ 137     LIBJSOUND_CFLAGS += -DX_ARCH=X_ARM
+ 138   endif
+ 139 
+ 140   ifeq ($(OPENJDK_TARGET_CPU), ppc)
+ 141     LIBJSOUND_CFLAGS += -DX_ARCH=X_PPC
+ 142   endif
+ 143 
+ 144   ifeq ($(OPENJDK_TARGET_CPU), ppc64)
+ 145        LIBJSOUND_CFLAGS += -DX_ARCH=X_PPC64
+ 146   endif
+
+
+
+
+ 147 endif
+ 148 
+ 149 LIBJSOUND_CFLAGS += -DEXTRA_SOUND_JNI_LIBS='"$(EXTRA_SOUND_JNI_LIBS)"'
+ 150 
+ 151 $(eval $(call SetupNativeCompilation,BUILD_LIBJSOUND, \
+ 152     LIBRARY := jsound, \
+ 153     OUTPUT_DIR := $(INSTALL_LIBRARIES_HERE), \
+ 154     SRC := $(LIBJSOUND_SRC_DIRS), \
+ 155     INCLUDE_FILES := $(LIBJSOUND_SRC_FILES), \
+ 156     LANG := $(LIBJSOUND_LANG), \
+ 157     OPTIMIZATION := LOW, \
+ 158     CFLAGS := $(CFLAGS_JDKLIB) \
+ 159         $(LIBJSOUND_CFLAGS), \
+ 160     CXXFLAGS := $(CXXFLAGS_JDKLIB) $(LIBJSOUND_CFLAGS), \
+ 161     MAPFILE := $(JDK_TOPDIR)/make/mapfiles/libjsound/mapfile-vers, \
+ 162     LDFLAGS := $(LDFLAGS_JDKLIB) \
+ 163         $(call SET_SHARED_LIBRARY_ORIGIN), \
+ 164     LDFLAGS_macosx := -framework CoreAudio -framework CoreFoundation \
+ 165         -framework CoreServices -framework AudioUnit $(LIBCXX) \
+ 166         -framework CoreMIDI -framework AudioToolbox, \
+
+</pre><hr></hr>
+</pre></td><td><pre>
+
+</pre><hr></hr><pre>
+ 127 
+ 128   ifeq ($(OPENJDK_TARGET_CPU), sparcv9)
+ 129     LIBJSOUND_CFLAGS += -DX_ARCH=X_SPARCV9
+ 130   endif
+ 131 
+ 132   ifeq ($(OPENJDK_TARGET_CPU), x86_64)
+ 133     LIBJSOUND_CFLAGS += -DX_ARCH=X_AMD64
+ 134   endif
+ 135 
+ 136   ifeq ($(OPENJDK_TARGET_CPU), arm)
+ 137     LIBJSOUND_CFLAGS += -DX_ARCH=X_ARM
+ 138   endif
+ 139 
+ 140   ifeq ($(OPENJDK_TARGET_CPU), ppc)
+ 141     LIBJSOUND_CFLAGS += -DX_ARCH=X_PPC
+ 142   endif
+ 143 
+ 144   ifeq ($(OPENJDK_TARGET_CPU), ppc64)
+ 145        LIBJSOUND_CFLAGS += -DX_ARCH=X_PPC64
+ 146   endif
+<span class="new"> 147 </span>
+<span class="new"> 148   ifeq ($(OPENJDK_TARGET_CPU), ppc64le)</span>
+<span class="new"> 149        LIBJSOUND_CFLAGS += -DX_ARCH=X_PPC64LE</span>
+<span class="new"> 150   endif</span>
+ 151 endif
+ 152 
+ 153 LIBJSOUND_CFLAGS += -DEXTRA_SOUND_JNI_LIBS='"$(EXTRA_SOUND_JNI_LIBS)"'
+ 154 
+ 155 $(eval $(call SetupNativeCompilation,BUILD_LIBJSOUND, \
+ 156     LIBRARY := jsound, \
+ 157     OUTPUT_DIR := $(INSTALL_LIBRARIES_HERE), \
+ 158     SRC := $(LIBJSOUND_SRC_DIRS), \
+ 159     INCLUDE_FILES := $(LIBJSOUND_SRC_FILES), \
+ 160     LANG := $(LIBJSOUND_LANG), \
+ 161     OPTIMIZATION := LOW, \
+ 162     CFLAGS := $(CFLAGS_JDKLIB) \
+ 163         $(LIBJSOUND_CFLAGS), \
+ 164     CXXFLAGS := $(CXXFLAGS_JDKLIB) $(LIBJSOUND_CFLAGS), \
+ 165     MAPFILE := $(JDK_TOPDIR)/make/mapfiles/libjsound/mapfile-vers, \
+ 166     LDFLAGS := $(LDFLAGS_JDKLIB) \
+ 167         $(call SET_SHARED_LIBRARY_ORIGIN), \
+ 168     LDFLAGS_macosx := -framework CoreAudio -framework CoreFoundation \
+ 169         -framework CoreServices -framework AudioUnit $(LIBCXX) \
+ 170         -framework CoreMIDI -framework AudioToolbox, \
+
+</pre><hr></hr>
+</pre></td>
+</tr></table>
+<center>&lt prev <a href='../../index.html' target='_top'>index</a> <a href='../../src/java.desktop/share/native/libjsound/SoundDefs.h.sdiff.html' target='_top'>next &gt</a></center>
+</body></html>

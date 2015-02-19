@@ -1,0 +1,227 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta charset="utf-8">
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="-1" />
+<!--
+   Note to customizers: the body of the webrev is IDed as SUNWwebrev
+   to allow easy overriding by users of webrev via the userContent.css
+   mechanism available in some browsers.
+
+   For example, to have all "removed" information be red instead of
+   brown, set a rule in your userContent.css file like:
+
+       body#SUNWwebrev span.removed { color: red ! important; }
+-->
+<style type="text/css" media="screen">
+body {
+    background-color: #eeeeee;
+}
+hr {
+    border: none 0;
+    border-top: 1px solid #aaa;
+    height: 1px;
+}
+div.summary {
+    font-size: .8em;
+    border-bottom: 1px solid #aaa;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+div.summary h2 {
+    margin-bottom: 0.3em;
+}
+div.summary table th {
+    text-align: right;
+    vertical-align: top;
+    white-space: nowrap;
+}
+span.lineschanged {
+    font-size: 0.7em;
+}
+span.oldmarker {
+    color: red;
+    font-size: large;
+    font-weight: bold;
+}
+span.newmarker {
+    color: green;
+    font-size: large;
+    font-weight: bold;
+}
+span.removed {
+    color: brown;
+}
+span.changed {
+    color: blue;
+}
+span.new {
+    color: blue;
+    font-weight: bold;
+}
+a.print { font-size: x-small; }
+
+</style>
+
+<style type="text/css" media="print">
+pre { font-size: 0.8em; font-family: courier, monospace; }
+span.removed { color: #444; font-style: italic }
+span.changed { font-weight: bold; }
+span.new { font-weight: bold; }
+span.newmarker { font-size: 1.2em; font-weight: bold; }
+span.oldmarker { font-size: 1.2em; font-weight: bold; }
+a.print {display: none}
+hr { border: none 0; border-top: 1px solid #aaa; height: 1px; }
+</style>
+
+<title>Old common/autoconf/hotspot-spec.gmk.in</title>
+<body id="SUNWwebrev">
+<pre>
+   1 #
+   2 # Copyright (c) 2011, 2013, Oracle and/or its affiliates. All rights reserved.
+   3 # DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+   4 #
+   5 # This code is free software; you can redistribute it and/or modify it
+   6 # under the terms of the GNU General Public License version 2 only, as
+   7 # published by the Free Software Foundation.  Oracle designates this
+   8 # particular file as subject to the "Classpath" exception as provided
+   9 # by Oracle in the LICENSE file that accompanied this code.
+  10 #
+  11 # This code is distributed in the hope that it will be useful, but WITHOUT
+  12 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+  13 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+  14 # version 2 for more details (a copy is included in the LICENSE file that
+  15 # accompanied this code).
+  16 #
+  17 # You should have received a copy of the GNU General Public License version
+  18 # 2 along with this work; if not, write to the Free Software Foundation,
+  19 # Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+  20 #
+  21 # Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+  22 # or visit www.oracle.com if you need additional information or have any
+  23 # questions.
+  24 #
+  25 
+  26 
+  27 # Chaining of spec files
+  28 HOTSPOT_SPEC:=$(dir $(SPEC))hotspot-spec.gmk
+  29 override SPEC=$(HOTSPOT_SPEC)
+  30 # Now include the base spec.gmk file
+  31 include $(BASE_SPEC)
+  32 
+  33 # Additional legacy variables defined for Hotspot
+  34 
+  35 @SET_OPENJDK@
+  36 
+  37 # Legacy defines controlled by the SUPPORT_HEADLESS and SUPPORT_HEADFUL options.
+  38 @BUILD_HEADLESS@
+  39 
+  40 # Legacy setting: OPT or DBG
+  41 VARIANT:=@VARIANT@
+  42 # Legacy setting: true or false
+  43 FASTDEBUG:=@FASTDEBUG@
+  44 # Legacy setting: debugging the class files?
+  45 DEBUG_CLASSFILES:=@DEBUG_CLASSFILES@
+  46 
+  47 ALT_CUPS_HEADERS_PATH:=$(patsubst -I%,%,$(filter -I%,@CUPS_CFLAGS@))
+  48 
+  49 # The HOSTCC/HOSTCXX is Hotspot terminology for the BUILD_CC/BUILD_CXX, i.e. the
+  50 # compiler that produces code that can be run on the build platform.
+  51 HOSTCC:=@FIXPATH@ @BUILD_CC@
+  52 HOSTCXX:=@FIXPATH@ @BUILD_CXX@
+  53 
+  54 ####################################################
+  55 #
+  56 # Legacy Hotspot support
+  57 
+  58 # If cross compiling, then define CROSS_COMPILE_ARCH:=cpu_name here.
+  59 @DEFINE_CROSS_COMPILE_ARCH@
+  60 
+  61 # Old name for OPENJDK_TARGET_OS (aix,bsd,hpux,linux,macosx,solaris,windows etc)
+  62 PLATFORM=$(OPENJDK_TARGET_OS)
+  63 # 32 or 64 bit
+  64 ARCH_DATA_MODEL=$(OPENJDK_TARGET_CPU_BITS)
+  65 
+  66 ALT_BOOTDIR=$(BOOT_JDK)
+  67 # Can be /sparcv9 or /amd64 on Solaris
+  68 ISA_DIR=$(OPENJDK_TARGET_CPU_ISADIR)
+  69 # Yet another name for arch used for an extra subdir below the jvm lib.
+  70 # Uses i386 and amd64, instead of x86 and x86_64.
+  71 LIBARCH=$(OPENJDK_TARGET_CPU_LEGACY_LIB)
+  72 # Set the cpu architecture
+  73 ARCH=$(OPENJDK_TARGET_CPU_ARCH)
+  74 # Legacy setting for building for a 64 bit machine.
+  75 # If yes then this expands to _LP64:=1
+  76 @LP64@
+  77 
+  78 # Legacy settings for zero
+  79 ZERO_ENDIANNESS=$(OPENJDK_TARGET_CPU_ENDIAN)
+  80 ZERO_LIBARCH=$(OPENJDK_TARGET_CPU_LEGACY_LIB)
+  81 ZERO_ARCHDEF=@ZERO_ARCHDEF@
+  82 ZERO_ARCHFLAG=@ZERO_ARCHFLAG@
+  83 LIBFFI_CFLAGS=@LIBFFI_CFLAGS@
+  84 LIBFFI_LIBS=@LIBFFI_LIBS@
+  85 
+  86 # Legacy settings for zeroshark
+  87 LLVM_CFLAGS=@LLVM_CFLAGS@
+  88 LLVM_LIBS=@LLVM_LIBS@
+  89 LLVM_LDFLAGS=@LLVM_LDFLAGS@
+  90 
+  91 ALT_OUTPUTDIR=$(HOTSPOT_OUTPUTDIR)
+  92 ALT_EXPORT_PATH=$(HOTSPOT_DIST)
+  93 
+  94 JVM_INTERPRETER:=@JVM_INTERPRETER@
+  95 ifeq ($(JVM_INTERPRETER), cpp)
+  96   CC_INTERP=true
+  97 endif
+  98 
+  99 HOTSPOT_MAKE_ARGS:=@HOTSPOT_MAKE_ARGS@ @STATIC_CXX_SETTING@
+ 100 # Control wether Hotspot runs Queens test after building
+ 101 TEST_IN_BUILD=@TEST_IN_BUILD@
+ 102 
+ 103 USE_CLANG := @USE_CLANG@
+ 104 
+ 105 # For hotspot, override compiler/tools definition to not include FIXPATH prefix.
+ 106 # Hotspot has its own handling on the Windows path situation.
+ 107 CXX:=@CCACHE@ @HOTSPOT_CXX@
+ 108 LD:=@HOTSPOT_LD@
+ 109 MT:=@HOTSPOT_MT@
+ 110 RC:=@HOTSPOT_RC@
+ 111 
+ 112 EXTRA_CFLAGS=@LEGACY_EXTRA_CFLAGS@ $(CFLAGS_CCACHE)
+ 113 EXTRA_CXXFLAGS=@LEGACY_EXTRA_CXXFLAGS@ $(CFLAGS_CCACHE)
+ 114 EXTRA_LDFLAGS=@LEGACY_EXTRA_LDFLAGS@
+ 115 
+ 116 USE_PRECOMPILED_HEADER=@USE_PRECOMPILED_HEADER@
+ 117 
+ 118 # Hotspot expects the variable FULL_DEBUG_SYMBOLS=1/0 to control debug symbols
+ 119 # creation.
+ 120 ifeq ($(ENABLE_DEBUG_SYMBOLS), true)
+ 121   FULL_DEBUG_SYMBOLS=1
+ 122   # Ensure hotspot uses the objcopy that configure located
+ 123   ALT_OBJCOPY:=$(OBJCOPY)
+ 124 else
+ 125   FULL_DEBUG_SYMBOLS=0
+ 126 endif
+ 127 
+ 128 # Hotspot expects the variable ZIP_DEBUGINFO_FILES=1/0 and not true/false.
+ 129 ifeq ($(ZIP_DEBUGINFO_FILES)$(ENABLE_DEBUG_SYMBOLS), truetrue)
+ 130   ZIP_DEBUGINFO_FILES:=1
+ 131 else
+ 132   ZIP_DEBUGINFO_FILES:=0
+ 133 endif
+ 134 
+ 135 ifeq ($(OPENJDK_TARGET_OS), windows)
+ 136   # On Windows, the Visual Studio toolchain needs the LIB and INCLUDE
+ 137   # environment variables (in Windows path style).
+ 138   export INCLUDE:=@VS_INCLUDE@
+ 139   export LIB:=@VS_LIB@
+ 140 endif
+ 141 
+ 142 # Sneak this in via the spec.gmk file, since we don't want to mess around too much with the Hotspot make files.
+ 143 # This is needed to get the LOG setting to work properly.
+ 144 include $(SRC_ROOT)/make/common/MakeBase.gmk
+</pre></body></html>

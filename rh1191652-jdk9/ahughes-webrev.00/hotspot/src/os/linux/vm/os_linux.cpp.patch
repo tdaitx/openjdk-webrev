@@ -1,0 +1,14 @@
+--- old/src/os/linux/vm/os_linux.cpp	2015-02-18 23:07:13.484453987 -0200
++++ new/src/os/linux/vm/os_linux.cpp	2015-02-18 23:07:13.414453987 -0200
+@@ -240,7 +240,11 @@
+ #elif defined(PPC32)
+ static char cpu_arch[] = "ppc";
+ #elif defined(PPC64)
++#if defined(VM_LITTLE_ENDIAN)
++static char cpu_arch[] = "ppc64le";
++#else
+ static char cpu_arch[] = "ppc64";
++#endif
+ #elif defined(SPARC)
+   #ifdef _LP64
+ static char cpu_arch[] = "sparcv9";

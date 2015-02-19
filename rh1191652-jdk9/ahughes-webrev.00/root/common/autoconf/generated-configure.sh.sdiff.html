@@ -1,0 +1,355 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta charset="utf-8">
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="-1" />
+<!--
+   Note to customizers: the body of the webrev is IDed as SUNWwebrev
+   to allow easy overriding by users of webrev via the userContent.css
+   mechanism available in some browsers.
+
+   For example, to have all "removed" information be red instead of
+   brown, set a rule in your userContent.css file like:
+
+       body#SUNWwebrev span.removed { color: red ! important; }
+-->
+<style type="text/css" media="screen">
+body {
+    background-color: #eeeeee;
+}
+hr {
+    border: none 0;
+    border-top: 1px solid #aaa;
+    height: 1px;
+}
+div.summary {
+    font-size: .8em;
+    border-bottom: 1px solid #aaa;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+div.summary h2 {
+    margin-bottom: 0.3em;
+}
+div.summary table th {
+    text-align: right;
+    vertical-align: top;
+    white-space: nowrap;
+}
+span.lineschanged {
+    font-size: 0.7em;
+}
+span.oldmarker {
+    color: red;
+    font-size: large;
+    font-weight: bold;
+}
+span.newmarker {
+    color: green;
+    font-size: large;
+    font-weight: bold;
+}
+span.removed {
+    color: brown;
+}
+span.changed {
+    color: blue;
+}
+span.new {
+    color: blue;
+    font-weight: bold;
+}
+a.print { font-size: x-small; }
+
+</style>
+
+<style type="text/css" media="print">
+pre { font-size: 0.8em; font-family: courier, monospace; }
+span.removed { color: #444; font-style: italic }
+span.changed { font-weight: bold; }
+span.new { font-weight: bold; }
+span.newmarker { font-size: 1.2em; font-weight: bold; }
+span.oldmarker { font-size: 1.2em; font-weight: bold; }
+a.print {display: none}
+hr { border: none 0; border-top: 1px solid #aaa; height: 1px; }
+</style>
+
+<title>jdk9-dev Sdiff common/autoconf </title>
+</head><body id="SUNWwebrev">
+<center>&lt prev <a href='../../index.html' target='_top'>index</a> <a href='../../common/autoconf/hotspot-spec.gmk.in.sdiff.html' target='_top'>next &gt</a></center>
+<h2>common/autoconf/generated-configure.sh</h2>
+<a class="print" href="javascript:print()">Print this page</a>
+<pre></pre>
+
+<table><tr valign="top">
+<td><pre>
+
+</pre><hr></hr><pre>
+4318 # Check if the VS env variables were setup prior to running configure.
+4319 # If not, then find vcvarsall.bat and run it automatically, and integrate
+4320 # the set env variables into the spec file.
+4321 
+4322 
+4323 
+4324 
+4325 
+4326 
+4327 
+4328 
+4329 
+4330 
+4331 
+4332 # This line needs to be here, verbatim, after all includes and the dummy hook
+4333 # definitions. It is replaced with custom functionality when building
+4334 # custom sources.
+4335 #CUSTOM_AUTOCONF_INCLUDE
+4336 
+4337 # Do not change or remove the following line, it is needed for consistency checks:
+<span class="changed">4338 DATE_WHEN_GENERATED=1423567509</span>
+4339 
+4340 ###############################################################################
+4341 #
+4342 # Initialization / Boot-strapping
+4343 #
+4344 # The bootstrapping process needs to solve the "chicken or the egg" problem,
+4345 # thus it jumps back and forth, each time gaining something needed later on.
+4346 #
+4347 ###############################################################################
+4348 
+4349 # If we are requested to print additional help, do that and then exit.
+4350 # This must be the very first call.
+4351 
+4352   if test "x$CONFIGURE_PRINT_TOOLCHAIN_LIST" != x; then
+4353     $PRINTF "The following toolchains are available as arguments to --with-toolchain-type.\n"
+4354     $PRINTF "Which are valid to use depends on the build platform.\n"
+4355     for toolchain in $VALID_TOOLCHAINS_all; do
+4356       # Use indirect variable referencing
+4357       toolchain_var_name=TOOLCHAIN_DESCRIPTION_$toolchain
+4358       TOOLCHAIN_DESCRIPTION=${!toolchain_var_name}
+
+</pre><hr></hr><pre>
+13583       ;;
+13584     arm*)
+13585       VAR_CPU=arm
+13586       VAR_CPU_ARCH=arm
+13587       VAR_CPU_BITS=32
+13588       VAR_CPU_ENDIAN=little
+13589       ;;
+13590     powerpc)
+13591       VAR_CPU=ppc
+13592       VAR_CPU_ARCH=ppc
+13593       VAR_CPU_BITS=32
+13594       VAR_CPU_ENDIAN=big
+13595       ;;
+13596     powerpc64)
+13597       VAR_CPU=ppc64
+13598       VAR_CPU_ARCH=ppc
+13599       VAR_CPU_BITS=64
+13600       VAR_CPU_ENDIAN=big
+13601       ;;
+13602     powerpc64le)
+<span class="changed">13603       VAR_CPU=ppc64</span>
+13604       VAR_CPU_ARCH=ppc
+13605       VAR_CPU_BITS=64
+13606       VAR_CPU_ENDIAN=little
+13607       ;;
+13608     s390)
+13609       VAR_CPU=s390
+13610       VAR_CPU_ARCH=s390
+13611       VAR_CPU_BITS=32
+13612       VAR_CPU_ENDIAN=big
+13613       ;;
+13614     s390x)
+13615       VAR_CPU=s390x
+13616       VAR_CPU_ARCH=s390
+13617       VAR_CPU_BITS=64
+13618       VAR_CPU_ENDIAN=big
+13619       ;;
+13620     sparc)
+13621       VAR_CPU=sparc
+13622       VAR_CPU_ARCH=sparc
+13623       VAR_CPU_BITS=32
+
+</pre><hr></hr><pre>
+13716       ;;
+13717     arm*)
+13718       VAR_CPU=arm
+13719       VAR_CPU_ARCH=arm
+13720       VAR_CPU_BITS=32
+13721       VAR_CPU_ENDIAN=little
+13722       ;;
+13723     powerpc)
+13724       VAR_CPU=ppc
+13725       VAR_CPU_ARCH=ppc
+13726       VAR_CPU_BITS=32
+13727       VAR_CPU_ENDIAN=big
+13728       ;;
+13729     powerpc64)
+13730       VAR_CPU=ppc64
+13731       VAR_CPU_ARCH=ppc
+13732       VAR_CPU_BITS=64
+13733       VAR_CPU_ENDIAN=big
+13734       ;;
+13735     powerpc64le)
+<span class="changed">13736       VAR_CPU=ppc64</span>
+13737       VAR_CPU_ARCH=ppc
+13738       VAR_CPU_BITS=64
+13739       VAR_CPU_ENDIAN=little
+13740       ;;
+13741     s390)
+13742       VAR_CPU=s390
+13743       VAR_CPU_ARCH=s390
+13744       VAR_CPU_BITS=32
+13745       VAR_CPU_ENDIAN=big
+13746       ;;
+13747     s390x)
+13748       VAR_CPU=s390x
+13749       VAR_CPU_ARCH=s390
+13750       VAR_CPU_BITS=64
+13751       VAR_CPU_ENDIAN=big
+13752       ;;
+13753     sparc)
+13754       VAR_CPU=sparc
+13755       VAR_CPU_ARCH=sparc
+13756       VAR_CPU_BITS=32
+
+</pre><hr></hr>
+</pre></td><td><pre>
+
+</pre><hr></hr><pre>
+4318 # Check if the VS env variables were setup prior to running configure.
+4319 # If not, then find vcvarsall.bat and run it automatically, and integrate
+4320 # the set env variables into the spec file.
+4321 
+4322 
+4323 
+4324 
+4325 
+4326 
+4327 
+4328 
+4329 
+4330 
+4331 
+4332 # This line needs to be here, verbatim, after all includes and the dummy hook
+4333 # definitions. It is replaced with custom functionality when building
+4334 # custom sources.
+4335 #CUSTOM_AUTOCONF_INCLUDE
+4336 
+4337 # Do not change or remove the following line, it is needed for consistency checks:
+<span class="changed">4338 DATE_WHEN_GENERATED=1424261413</span>
+4339 
+4340 ###############################################################################
+4341 #
+4342 # Initialization / Boot-strapping
+4343 #
+4344 # The bootstrapping process needs to solve the "chicken or the egg" problem,
+4345 # thus it jumps back and forth, each time gaining something needed later on.
+4346 #
+4347 ###############################################################################
+4348 
+4349 # If we are requested to print additional help, do that and then exit.
+4350 # This must be the very first call.
+4351 
+4352   if test "x$CONFIGURE_PRINT_TOOLCHAIN_LIST" != x; then
+4353     $PRINTF "The following toolchains are available as arguments to --with-toolchain-type.\n"
+4354     $PRINTF "Which are valid to use depends on the build platform.\n"
+4355     for toolchain in $VALID_TOOLCHAINS_all; do
+4356       # Use indirect variable referencing
+4357       toolchain_var_name=TOOLCHAIN_DESCRIPTION_$toolchain
+4358       TOOLCHAIN_DESCRIPTION=${!toolchain_var_name}
+
+</pre><hr></hr><pre>
+13583       ;;
+13584     arm*)
+13585       VAR_CPU=arm
+13586       VAR_CPU_ARCH=arm
+13587       VAR_CPU_BITS=32
+13588       VAR_CPU_ENDIAN=little
+13589       ;;
+13590     powerpc)
+13591       VAR_CPU=ppc
+13592       VAR_CPU_ARCH=ppc
+13593       VAR_CPU_BITS=32
+13594       VAR_CPU_ENDIAN=big
+13595       ;;
+13596     powerpc64)
+13597       VAR_CPU=ppc64
+13598       VAR_CPU_ARCH=ppc
+13599       VAR_CPU_BITS=64
+13600       VAR_CPU_ENDIAN=big
+13601       ;;
+13602     powerpc64le)
+<span class="changed">13603       VAR_CPU=ppc64le</span>
+13604       VAR_CPU_ARCH=ppc
+13605       VAR_CPU_BITS=64
+13606       VAR_CPU_ENDIAN=little
+13607       ;;
+13608     s390)
+13609       VAR_CPU=s390
+13610       VAR_CPU_ARCH=s390
+13611       VAR_CPU_BITS=32
+13612       VAR_CPU_ENDIAN=big
+13613       ;;
+13614     s390x)
+13615       VAR_CPU=s390x
+13616       VAR_CPU_ARCH=s390
+13617       VAR_CPU_BITS=64
+13618       VAR_CPU_ENDIAN=big
+13619       ;;
+13620     sparc)
+13621       VAR_CPU=sparc
+13622       VAR_CPU_ARCH=sparc
+13623       VAR_CPU_BITS=32
+
+</pre><hr></hr><pre>
+13716       ;;
+13717     arm*)
+13718       VAR_CPU=arm
+13719       VAR_CPU_ARCH=arm
+13720       VAR_CPU_BITS=32
+13721       VAR_CPU_ENDIAN=little
+13722       ;;
+13723     powerpc)
+13724       VAR_CPU=ppc
+13725       VAR_CPU_ARCH=ppc
+13726       VAR_CPU_BITS=32
+13727       VAR_CPU_ENDIAN=big
+13728       ;;
+13729     powerpc64)
+13730       VAR_CPU=ppc64
+13731       VAR_CPU_ARCH=ppc
+13732       VAR_CPU_BITS=64
+13733       VAR_CPU_ENDIAN=big
+13734       ;;
+13735     powerpc64le)
+<span class="changed">13736       VAR_CPU=ppc64le</span>
+13737       VAR_CPU_ARCH=ppc
+13738       VAR_CPU_BITS=64
+13739       VAR_CPU_ENDIAN=little
+13740       ;;
+13741     s390)
+13742       VAR_CPU=s390
+13743       VAR_CPU_ARCH=s390
+13744       VAR_CPU_BITS=32
+13745       VAR_CPU_ENDIAN=big
+13746       ;;
+13747     s390x)
+13748       VAR_CPU=s390x
+13749       VAR_CPU_ARCH=s390
+13750       VAR_CPU_BITS=64
+13751       VAR_CPU_ENDIAN=big
+13752       ;;
+13753     sparc)
+13754       VAR_CPU=sparc
+13755       VAR_CPU_ARCH=sparc
+13756       VAR_CPU_BITS=32
+
+</pre><hr></hr>
+</pre></td>
+</tr></table>
+<center>&lt prev <a href='../../index.html' target='_top'>index</a> <a href='../../common/autoconf/hotspot-spec.gmk.in.sdiff.html' target='_top'>next &gt</a></center>
+</body></html>
